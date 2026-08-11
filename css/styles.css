@@ -1,0 +1,94 @@
+::selection {
+  background: #C13FA0;
+  color: #FAFAFC;
+}
+
+body {
+  background-color: #FAFAFC;
+}
+
+.brand-gradient-text {
+  background: linear-gradient(135deg, #26339E 0%, #7B4FC9 50%, #C13FA0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero signature word-cycle */
+.cycle-word {
+  display: inline-block;
+  transition: opacity 0.35s ease, transform 0.35s ease, color 0.35s ease;
+}
+.cycle-word.is-swapping {
+  opacity: 0;
+  transform: translateY(0.25em);
+}
+.cycle-word.is-final {
+  color: #F3A83B;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-word {
+    transition: none;
+  }
+}
+
+/* Nav underline */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: #F3A83B;
+  transition: width 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  width: 100%;
+}
+
+/* Mobile nav */
+#mobile-nav {
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+#mobile-nav.menu-open {
+  display: flex;
+}
+@media (min-width: 768px) {
+  #mobile-nav {
+    display: none !important;
+  }
+}
+
+/* Card lift */
+.lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(22, 22, 46, 0.25);
+}
+
+/* Draft/placeholder flag */
+.draft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(243, 168, 59, 0.4);
+  background: rgba(243, 168, 59, 0.1);
+  padding: 0.35rem 0.9rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a5a13;
+}

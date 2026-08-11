@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Agenzi — AI Integration Studio</title>
-<meta name="description" content="Agenzi builds custom AI agents into your CRM, inbox, vendor management, and content pipelines — so the busywork runs itself." />
+<title>Contact — Agenzi</title>
+<meta name="description" content="Book a free consultation with Agenzi and let's find out what your AI agent should be doing first." />
 <link rel="icon" href="assets/agenzi-logo.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,13 +24,13 @@
       </a>
 
       <nav class="hidden items-center gap-6 font-mono text-xs uppercase tracking-wider text-ink/70 md:flex">
-        <a href="index.html" class="nav-link" aria-current="page">Home</a>
+        <a href="index.html" class="nav-link">Home</a>
         <a href="greetings.html" class="nav-link">Greetings</a>
         <a href="the-problem.html" class="nav-link">The Problem</a>
         <a href="the-fix.html" class="nav-link">The Fix</a>
         <a href="how-we-work.html" class="nav-link">How We Work</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="contact.html" class="nav-link" aria-current="page">Contact</a>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -58,24 +58,54 @@
 </header>
 
 <main>
-  <section class="relative overflow-hidden">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-gradient-to-br from-navy via-violet to-magenta opacity-20 blur-3xl"></div>
-      <div class="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-10 blur-3xl"></div>
-    </div>
+  <section class="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+    <span class="draft-badge">Draft copy &amp; placeholder contact details — pending client direction</span>
 
-    <div class="relative mx-auto flex max-w-5xl flex-col items-center px-6 py-28 text-center sm:py-36">
-      <span class="font-mono text-xs uppercase tracking-widest text-muted">Agenzi — AI Integration Studio</span>
+    <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">07 — Contact</span>
+    <h1 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+      Book free consultation
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-muted">
+      Tell us what's eating your week. Thirty minutes, no slide deck, no obligation.
+    </p>
 
-      <h1 class="mt-6 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-        Change has many names, and this time it's called
-        <span id="cycle-word" class="cycle-word">the printing press</span>.
-      </h1>
+    <div class="mt-14 grid gap-12 lg:grid-cols-5">
+      <form class="lg:col-span-3 grid grid-cols-1 gap-5 sm:grid-cols-2" action="#" method="post">
+        <div class="sm:col-span-1">
+          <label for="name" class="font-mono text-xs uppercase tracking-wider text-ink/70">Name</label>
+          <input id="name" name="name" type="text" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+        </div>
+        <div class="sm:col-span-1">
+          <label for="email" class="font-mono text-xs uppercase tracking-wider text-ink/70">Email</label>
+          <input id="email" name="email" type="email" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="business" class="font-mono text-xs uppercase tracking-wider text-ink/70">Business name</label>
+          <input id="business" name="business" type="text" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="message" class="font-mono text-xs uppercase tracking-wider text-ink/70">What's eating your week?</label>
+          <textarea id="message" name="message" rows="5" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20"></textarea>
+        </div>
+        <div class="sm:col-span-2">
+          <button type="submit" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+            Book free consultation
+          </button>
+          <p class="mt-3 text-xs text-muted">This form isn't wired to a backend yet — connect it to your form handler of choice before launch.</p>
+        </div>
+      </form>
 
-      <div class="mt-10">
-        <a href="contact.html" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
-          Book free consultation
-        </a>
+      <div class="lg:col-span-2">
+        <div class="rounded-2xl border border-ink/10 bg-mist p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Reach us directly</span>
+          <p class="mt-3 font-display text-xl font-semibold">hello@agenzi.studio</p>
+          <p class="mt-1 text-sm text-muted">Placeholder — swap for the real inbox.</p>
+
+          <div class="mt-6 border-t border-ink/10 pt-6">
+            <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Response time</span>
+            <p class="mt-2 text-sm text-muted">We reply within one business day. Usually faster.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>

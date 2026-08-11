@@ -74,16 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- GSAP ScrollTrigger tunnel zoom ----
   // Each section's .reveal-inner is scrubbed directly to scroll position:
   // zooming in from tiny+blurred as the section approaches viewport center,
-  // then continuing to zoom out past it as you keep scrolling, so the zoom
-  // is always in lockstep with the scrollbar, never a triggered snap-in.
+  // then HOLDING there at full clarity for a real reading window, then
+  // continuing to zoom out past it as you keep scrolling. The hold is the
+  // point — without it, text only comes into focus for an instant before
+  // blurring away again, too fast to actually read.
   const zoomSections = Array.from(document.querySelectorAll('.reveal-section'));
-  const tunnelBurst = document.getElementById('tunnel-burst');
-  const fireTunnelBurst = () => {
-    if (!tunnelBurst) return;
-    tunnelBurst.classList.remove('is-firing');
-    void tunnelBurst.offsetWidth;
-    tunnelBurst.classList.add('is-firing');
-  };
 
   if (zoomSections.length && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
@@ -94,9 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inner) gsap.set(inner, { opacity: 1, scale: 1, filter: 'blur(0px)' });
       });
     } else {
-      // Extend well past a single viewport height so the zoom is unmistakable
-      // even on a fast trackpad flick, not just a slow deliberate scroll.
-      const zoomDistance = () => Math.round(window.innerHeight * 2.2);
+      // Extend well past a single viewport height so the zoom (and the
+      // reading window inside it) is unmistakable even on a fast trackpad
+      // flick, not just a slow deliberate scroll.
+      const zoomDistance = () => Math.round(window.innerHeight * 3.2);
 
       zoomSections.forEach((section) => {
         const inner = section.querySelector('.reveal-inner');
@@ -124,39 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
             { scale: 0.2, opacity: 0, filter: 'blur(24px)' },
             { scale: 1, opacity: 1, filter: 'blur(0px)', ease: 'none', duration: 1 }
           );
-          tl.to(inner, { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 });
+          // Hold at full clarity — this gap is where the section is actually read.
+          tl.to(inner, { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 }, '+=3');
         } else {
           gsap.set(inner, { scale: 1, opacity: 1, filter: 'blur(0px)' });
-          tl.fromTo(
-            inner,
-            { scale: 1, opacity: 1, filter: 'blur(0px)' },
-            { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 }
-          );
+          tl.to(inner, { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 }, 3);
         }
-
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top center',
-          onEnter: fireTunnelBurst,
-          onEnterBack: fireTunnelBurst,
-        });
       });
-
-      // The Agenzi swirl + ball spins continuously as you scroll the whole
-      // page, on top of pulsing brighter at each section handoff.
-      const swirl = document.querySelector('.tunnel-swirl');
-      if (swirl) {
-        gsap.to(swirl, {
-          rotation: 1440,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: document.body,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 0.6,
-          },
-        });
-      }
     }
   }
 

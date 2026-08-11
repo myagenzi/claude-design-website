@@ -67,8 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ---- Scroll-triggered zoom reveal ----
+  // ---- Scroll-triggered tunnel-zoom reveal ----
   const revealTargets = document.querySelectorAll('.reveal-section');
+  const tunnelBurst = document.getElementById('tunnel-burst');
+  const fireTunnelBurst = () => {
+    if (!tunnelBurst) return;
+    tunnelBurst.classList.remove('is-firing');
+    void tunnelBurst.offsetWidth;
+    tunnelBurst.classList.add('is-firing');
+  };
+
   if (prefersReducedMotion) {
     revealTargets.forEach((el) => el.classList.add('is-visible'));
   } else if ('IntersectionObserver' in window) {
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
+            fireTunnelBurst();
             observer.unobserve(entry.target);
           }
         });

@@ -9,7 +9,8 @@ tailwind.config = {
         gold: '#F3A83B',
         mist: '#ECEAF3',
         paper: '#FAFAFC',
-        muted: '#6E6E82',
+        muted: '#9A9AB4',
+        charcoal: '#17172C',
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'sans-serif'],

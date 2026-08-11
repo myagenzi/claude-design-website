@@ -94,6 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inner) gsap.set(inner, { opacity: 1, scale: 1, filter: 'blur(0px)' });
       });
     } else {
+      // Extend well past a single viewport height so the zoom is unmistakable
+      // even on a fast trackpad flick, not just a slow deliberate scroll.
+      const zoomDistance = () => Math.round(window.innerHeight * 2.2);
+
       zoomSections.forEach((section) => {
         const inner = section.querySelector('.reveal-inner');
         if (!inner) return;
@@ -109,8 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // computing progress from a start point in the negative-scroll
             // past, landing mid-timeline immediately on load).
             start: onlyExit ? 'top top' : 'top bottom',
-            end: 'bottom top',
-            scrub: 0.3,
+            end: zoomDistance,
+            scrub: 0.6,
           },
         });
 
@@ -137,6 +141,22 @@ document.addEventListener('DOMContentLoaded', () => {
           onEnterBack: fireTunnelBurst,
         });
       });
+
+      // The Agenzi swirl + ball spins continuously as you scroll the whole
+      // page, on top of pulsing brighter at each section handoff.
+      const swirl = document.querySelector('.tunnel-swirl');
+      if (swirl) {
+        gsap.to(swirl, {
+          rotation: 1440,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.6,
+          },
+        });
+      }
     }
   }
 

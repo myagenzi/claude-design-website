@@ -15,9 +15,9 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="font-sans text-ink antialiased">
+<body class="font-sans text-paper antialiased bg-ink">
 
-<header class="sticky top-0 z-50 border-b border-ink/10 bg-paper/80 backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-paper/10 bg-charcoal/80 backdrop-blur">
   <div class="mx-auto max-w-6xl px-6">
     <div class="flex h-16 items-center justify-between">
       <a href="#home" class="flex items-center gap-2">
@@ -25,7 +25,7 @@
         <span class="font-display text-xl font-bold brand-gradient-text">Agenzi</span>
       </a>
 
-      <nav class="hidden items-center gap-6 font-mono text-xs uppercase tracking-wider text-ink/70 md:flex">
+      <nav class="hidden items-center gap-6 font-mono text-xs uppercase tracking-wider text-paper/70 md:flex">
         <a href="#home" class="nav-link" data-nav-link>Home</a>
         <a href="#greetings" class="nav-link" data-nav-link>Greetings</a>
         <a href="#the-problem" class="nav-link" data-nav-link>The Problem</a>
@@ -36,17 +36,17 @@
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="hidden items-center rounded-full bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition hover:bg-navy sm:inline-flex">
+        <a href="#contact" class="hidden items-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink transition hover:bg-gold sm:inline-flex">
           Book free consultation
         </a>
-        <button id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 md:hidden">
+        <button id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 md:hidden">
           <span class="sr-only">Toggle menu</span>
           <span aria-hidden="true">☰</span>
         </button>
       </div>
     </div>
 
-    <div id="mobile-nav" class="pb-6 font-mono text-sm uppercase tracking-wider text-ink/70">
+    <div id="mobile-nav" class="pb-6 font-mono text-sm uppercase tracking-wider text-paper/70">
       <a href="#home">Home</a>
       <a href="#greetings">Greetings</a>
       <a href="#the-problem">The Problem</a>
@@ -54,13 +54,22 @@
       <a href="#how-we-work">How We Work</a>
       <a href="#pricing">Pricing</a>
       <a href="#contact">Contact</a>
-      <a href="#contact" class="mt-2 inline-flex w-fit items-center rounded-full bg-ink px-5 py-2.5 text-paper">Book free consultation</a>
+      <a href="#contact" class="mt-2 inline-flex w-fit items-center rounded-full bg-paper px-5 py-2.5 text-ink">Book free consultation</a>
     </div>
   </div>
 </header>
 
 <div id="tunnel-burst" class="tunnel-burst" aria-hidden="true">
   <span></span><span></span><span></span><span></span>
+  <svg class="tunnel-swirl" viewBox="0 0 400 400">
+    <g class="tunnel-swirl__blades" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+      <path d="M200 90 C150 110 120 160 140 210 C90 220 60 270 80 320"/>
+      <path d="M200 90 C250 110 280 160 260 210 C310 220 340 270 320 320"/>
+      <path d="M200 85 C200 130 230 155 270 165"/>
+      <path d="M200 85 C200 130 170 155 130 165"/>
+    </g>
+    <circle cx="200" cy="205" r="24" class="tunnel-swirl__ball" />
+  </svg>
 </div>
 
 <main>
@@ -137,10 +146,10 @@
   </section>
 
   <!-- ============ GREETINGS ============ -->
-  <section id="greetings" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+  <section id="greetings" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-ink" data-parallax-scope>
     <div class="reveal-inner w-full">
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-violet to-magenta opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-violet to-magenta opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">
@@ -151,7 +160,7 @@
         </p>
 
         <div class="reveal-body mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -160,10 +169,10 @@
   </section>
 
   <!-- ============ THE PROBLEM ============ -->
-  <section id="the-problem" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+  <section id="the-problem" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-charcoal" data-parallax-scope>
     <div class="reveal-inner w-full">
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -right-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-navy to-violet opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="parallax-blob absolute -right-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-navy to-violet opacity-25 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">
@@ -179,7 +188,7 @@
         </div>
 
         <div class="reveal-body mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -188,10 +197,10 @@
   </section>
 
   <!-- ============ THE FIX ============ -->
-  <section id="the-fix" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+  <section id="the-fix" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-ink" data-parallax-scope>
     <div class="reveal-inner w-full">
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">
@@ -206,7 +215,7 @@
         </div>
 
         <div class="reveal-body mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -215,7 +224,7 @@
   </section>
 
   <!-- ============ HOW WE WORK ============ -->
-  <section id="how-we-work" class="scroll-mt-16 reveal-section relative overflow-hidden bg-paper py-24 sm:py-28">
+  <section id="how-we-work" class="scroll-mt-16 reveal-section relative overflow-hidden bg-charcoal py-24 sm:py-28">
     <div class="reveal-inner mx-auto max-w-5xl px-6">
       <span class="draft-badge">Draft copy — pending client direction</span>
 
@@ -228,25 +237,25 @@
       </p>
 
       <div class="reveal-body mt-16 grid gap-8 sm:grid-cols-2">
-        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-navy">Step 01</span>
           <h3 class="mt-3 font-display text-2xl font-semibold">Tell us what's eating your week</h3>
           <p class="mt-3 text-muted">A 30-minute call. No pitch deck. We ask what you're doing by hand that a computer should be doing instead: your inbox, your CRM, your vendor list, whatever it is.</p>
         </div>
 
-        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-violet">Step 02</span>
           <h3 class="mt-3 font-display text-2xl font-semibold">We map the agent to your systems</h3>
           <p class="mt-3 text-muted">We look at what you already use (your CRM, your inbox, your spreadsheets) and design the agent to live inside them, not replace them.</p>
         </div>
 
-        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-magenta">Step 03</span>
           <h3 class="mt-3 font-display text-2xl font-semibold">We build it, then we show you</h3>
           <p class="mt-3 text-muted">You get a working agent, not a prototype. We walk through it together and tune it against real tasks before it touches anything important.</p>
         </div>
 
-        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-gold">Step 04</span>
           <h3 class="mt-3 font-display text-2xl font-semibold">We stick around</h3>
           <p class="mt-3 text-muted">Systems change, your business changes, the agent should too. We keep it fed, tuned, and out of trouble.</p>
@@ -254,7 +263,7 @@
       </div>
 
       <div class="reveal-body mt-16">
-        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
           Book free consultation
         </a>
       </div>
@@ -262,7 +271,7 @@
   </section>
 
   <!-- ============ PRICING ============ -->
-  <section id="pricing" class="scroll-mt-16 reveal-section relative overflow-hidden bg-mist py-24 sm:py-28">
+  <section id="pricing" class="scroll-mt-16 reveal-section relative overflow-hidden bg-ink py-24 sm:py-28">
     <div class="reveal-inner mx-auto max-w-5xl px-6">
       <span class="draft-badge">Draft copy &amp; illustrative pricing — pending client direction</span>
 
@@ -275,7 +284,7 @@
       </p>
 
       <div class="reveal-body mt-16 grid gap-8 lg:grid-cols-3">
-        <div class="lift flex flex-col rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift flex flex-col rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-navy">Starter</span>
           <p class="mt-3 font-display text-3xl font-bold">$1,500<span class="text-base font-normal text-muted">/mo</span></p>
           <p class="mt-3 text-sm text-muted">One agent, one system. Good for testing the water: an inbox triager or a vendor tracker.</p>
@@ -286,7 +295,7 @@
           </ul>
         </div>
 
-        <div class="lift flex flex-col rounded-2xl border-2 border-navy bg-white p-8 shadow-lg shadow-navy/10">
+        <div class="lift flex flex-col rounded-2xl border-2 border-gold bg-paper/5 p-8 shadow-lg shadow-gold/10">
           <span class="font-mono text-xs uppercase tracking-widest text-violet">Growth</span>
           <p class="mt-3 font-display text-3xl font-bold">$3,500<span class="text-base font-normal text-muted">/mo</span></p>
           <p class="mt-3 text-sm text-muted">Multiple agents across your CRM, inbox, and content pipeline, working together.</p>
@@ -297,7 +306,7 @@
           </ul>
         </div>
 
-        <div class="lift flex flex-col rounded-2xl border border-ink/10 bg-white p-8">
+        <div class="lift flex flex-col rounded-2xl border border-paper/10 bg-paper/5 p-8">
           <span class="font-mono text-xs uppercase tracking-widest text-magenta">Custom</span>
           <p class="mt-3 font-display text-3xl font-bold">Let's talk</p>
           <p class="mt-3 text-sm text-muted">Full operational buildout across every corner of the business. Scoped with you, not a template.</p>
@@ -310,7 +319,7 @@
       </div>
 
       <div class="reveal-body mt-16">
-        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
           Book free consultation
         </a>
       </div>
@@ -318,7 +327,7 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="scroll-mt-16 reveal-section relative overflow-hidden bg-paper py-24 sm:py-28">
+  <section id="contact" class="scroll-mt-16 reveal-section relative overflow-hidden bg-charcoal py-24 sm:py-28">
     <div class="reveal-inner mx-auto max-w-5xl px-6">
       <span class="draft-badge">Draft copy &amp; placeholder contact details — pending client direction</span>
 
@@ -333,23 +342,23 @@
       <div class="reveal-body mt-14 grid gap-12 lg:grid-cols-5">
         <form class="lg:col-span-3 grid grid-cols-1 gap-5 sm:grid-cols-2" action="#" method="post">
           <div class="sm:col-span-1">
-            <label for="name" class="font-mono text-xs uppercase tracking-wider text-ink/70">Name</label>
-            <input id="name" name="name" type="text" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+            <label for="name" class="font-mono text-xs uppercase tracking-wider text-paper/70">Name</label>
+            <input id="name" name="name" type="text" required class="mt-2 w-full rounded-lg border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20" />
           </div>
           <div class="sm:col-span-1">
-            <label for="email" class="font-mono text-xs uppercase tracking-wider text-ink/70">Email</label>
-            <input id="email" name="email" type="email" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+            <label for="email" class="font-mono text-xs uppercase tracking-wider text-paper/70">Email</label>
+            <input id="email" name="email" type="email" required class="mt-2 w-full rounded-lg border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20" />
           </div>
           <div class="sm:col-span-2">
-            <label for="business" class="font-mono text-xs uppercase tracking-wider text-ink/70">Business name</label>
-            <input id="business" name="business" type="text" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+            <label for="business" class="font-mono text-xs uppercase tracking-wider text-paper/70">Business name</label>
+            <input id="business" name="business" type="text" class="mt-2 w-full rounded-lg border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20" />
           </div>
           <div class="sm:col-span-2">
-            <label for="message" class="font-mono text-xs uppercase tracking-wider text-ink/70">What's eating your week?</label>
-            <textarea id="message" name="message" rows="5" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20"></textarea>
+            <label for="message" class="font-mono text-xs uppercase tracking-wider text-paper/70">What's eating your week?</label>
+            <textarea id="message" name="message" rows="5" class="mt-2 w-full rounded-lg border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20"></textarea>
           </div>
           <div class="sm:col-span-2">
-            <button type="submit" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+            <button type="submit" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
               Book free consultation
             </button>
             <p class="mt-3 text-xs text-muted">This form isn't wired to a backend yet. Connect it to your form handler of choice before launch.</p>
@@ -357,13 +366,13 @@
         </form>
 
         <div class="lg:col-span-2">
-          <div class="rounded-2xl border border-ink/10 bg-mist p-8">
-            <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Reach us directly</span>
+          <div class="rounded-2xl border border-paper/10 bg-paper/5 p-8">
+            <span class="font-mono text-xs uppercase tracking-widest text-paper/40">Reach us directly</span>
             <p class="mt-3 font-display text-xl font-semibold">hello@agenzi.studio</p>
             <p class="mt-1 text-sm text-muted">Placeholder, swap for the real inbox.</p>
 
-            <div class="mt-6 border-t border-ink/10 pt-6">
-              <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Response time</span>
+            <div class="mt-6 border-t border-paper/10 pt-6">
+              <span class="font-mono text-xs uppercase tracking-widest text-paper/40">Response time</span>
               <p class="mt-2 text-sm text-muted">We reply within one business day. Usually faster.</p>
             </div>
           </div>
@@ -374,7 +383,7 @@
 
 </main>
 
-<footer class="border-t border-ink/10 bg-mist">
+<footer class="border-t border-paper/10 bg-charcoal">
   <div class="mx-auto max-w-6xl px-6 py-12">
     <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
       <div class="max-w-sm">
@@ -385,28 +394,28 @@
         <p class="mt-3 text-sm text-muted">We build the AI agents that quietly run your busywork, so you can go do the parts of the job you actually like.</p>
       </div>
 
-      <div class="grid grid-cols-2 gap-8 font-mono text-xs uppercase tracking-wider text-ink/70 sm:grid-cols-3">
+      <div class="grid grid-cols-2 gap-8 font-mono text-xs uppercase tracking-wider text-paper/70 sm:grid-cols-3">
         <div class="flex flex-col gap-2">
-          <span class="text-ink/40">Site</span>
-          <a href="#home" class="hover:text-navy">Home</a>
-          <a href="#greetings" class="hover:text-navy">Greetings</a>
-          <a href="#the-problem" class="hover:text-navy">The Problem</a>
-          <a href="#the-fix" class="hover:text-navy">The Fix</a>
+          <span class="text-paper/40">Site</span>
+          <a href="#home" class="hover:text-gold">Home</a>
+          <a href="#greetings" class="hover:text-gold">Greetings</a>
+          <a href="#the-problem" class="hover:text-gold">The Problem</a>
+          <a href="#the-fix" class="hover:text-gold">The Fix</a>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-ink/40">Studio</span>
-          <a href="#how-we-work" class="hover:text-navy">How We Work</a>
-          <a href="#pricing" class="hover:text-navy">Pricing</a>
-          <a href="#contact" class="hover:text-navy">Contact</a>
+          <span class="text-paper/40">Studio</span>
+          <a href="#how-we-work" class="hover:text-gold">How We Work</a>
+          <a href="#pricing" class="hover:text-gold">Pricing</a>
+          <a href="#contact" class="hover:text-gold">Contact</a>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-ink/40">Get in touch</span>
-          <a href="#contact" class="hover:text-navy">Book free consultation</a>
+          <span class="text-paper/40">Get in touch</span>
+          <a href="#contact" class="hover:text-gold">Book free consultation</a>
         </div>
       </div>
     </div>
 
-    <div class="mt-10 flex flex-col gap-2 border-t border-ink/10 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-10 flex flex-col gap-2 border-t border-paper/10 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
       <p>© <span data-year></span> Agenzi. All rights reserved.</p>
       <p class="font-mono uppercase tracking-wider">Change has many names.</p>
     </div>

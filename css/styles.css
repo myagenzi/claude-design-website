@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #FAFAFC;
+  background-color: #16162E;
 }
 
 html {
@@ -179,6 +179,34 @@ html {
   100% { width: 2400px; height: 2400px; opacity: 0; }
 }
 
+/* Windmill swirl + ball — the Agenzi mark, spun by scroll (see js/main.js) */
+.tunnel-swirl {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  opacity: 0.5;
+  color: #C13FA0;
+  filter: drop-shadow(0 0 24px rgba(243, 168, 59, 0.35));
+}
+.tunnel-swirl__ball {
+  fill: #F3A83B;
+  stroke: none;
+}
+.tunnel-burst.is-firing .tunnel-swirl {
+  animation: tunnel-swirl-pulse 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+@keyframes tunnel-swirl-pulse {
+  0% { opacity: 0.5; }
+  35% { opacity: 1; filter: drop-shadow(0 0 40px rgba(243, 168, 59, 0.6)); }
+  100% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tunnel-swirl {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* js/main.js skips the scroll-zoom loop entirely under reduced motion,
      leaving .reveal-inner at its natural, untransformed CSS state. */
@@ -244,11 +272,11 @@ html {
   gap: 0.4rem;
   border-radius: 9999px;
   border: 1px solid rgba(243, 168, 59, 0.4);
-  background: rgba(243, 168, 59, 0.1);
+  background: rgba(243, 168, 59, 0.12);
   padding: 0.35rem 0.9rem;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8a5a13;
+  color: #F5C066;
 }

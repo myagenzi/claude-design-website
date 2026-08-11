@@ -64,66 +64,68 @@
 <main>
 
   <!-- ============ HOME / HERO ============ -->
-  <section id="home" class="scroll-mt-16 relative overflow-hidden bg-ink text-paper" data-parallax-scope>
-    <div id="hero-scene" class="absolute inset-0" aria-hidden="true">
-      <div class="era-panel is-active" data-era="press">
-        <img src="assets/eras/press.jpg" alt="Antique hand-operated printing press" class="era-photo" />
-        <div class="era-panel__gradient"></div>
+  <section id="home" class="scroll-mt-16 reveal-section zoom-only-exit relative min-h-screen overflow-hidden bg-ink text-paper" data-parallax-scope>
+    <div class="reveal-inner absolute inset-0">
+      <div id="hero-scene" class="absolute inset-0" aria-hidden="true">
+        <div class="era-panel is-active" data-era="press">
+          <img src="assets/eras/press.jpg" alt="Antique hand-operated printing press" class="era-photo" />
+          <div class="era-panel__gradient"></div>
+        </div>
+
+        <div class="era-panel" data-era="steam">
+          <img src="assets/eras/steam.jpg" alt="Steam locomotive" class="era-photo" />
+          <div class="era-panel__gradient"></div>
+        </div>
+
+        <div class="era-panel" data-era="assembly">
+          <img src="assets/eras/assembly.jpg" alt="Ford factory assembly line, 1913" class="era-photo" />
+          <div class="era-panel__gradient"></div>
+        </div>
+
+        <div class="era-panel" data-era="internet">
+          <img src="assets/eras/internet.jpg" alt="Data center and network infrastructure" class="era-photo" />
+          <div class="era-panel__gradient"></div>
+        </div>
+
+        <div class="era-panel" data-era="smartphone">
+          <img src="assets/eras/smartphone.jpg" alt="Hand holding a smartphone" class="era-photo" />
+          <div class="era-panel__gradient"></div>
+        </div>
+
+        <div class="era-panel" data-era="ai">
+          <div class="era-panel__gradient era-panel__gradient--ai"></div>
+          <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+            <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+              <path d="M600 260 C480 300 430 380 470 460 C400 480 360 550 400 620"/>
+              <path d="M600 260 C720 300 770 380 730 460 C800 480 840 550 800 620"/>
+              <path d="M600 250 C600 320 640 360 700 380"/>
+              <path d="M600 250 C600 320 560 360 500 380"/>
+            </g>
+            <circle cx="600" cy="470" r="70" fill="currentColor" stroke="none" opacity=".9"/>
+            <g fill="currentColor" stroke="none">
+              <circle cx="760" cy="220" r="8"/>
+              <circle cx="800" cy="260" r="5"/>
+              <circle cx="720" cy="180" r="10"/>
+            </g>
+          </svg>
+        </div>
       </div>
 
-      <div class="era-panel" data-era="steam">
-        <img src="assets/eras/steam.jpg" alt="Steam locomotive" class="era-photo" />
-        <div class="era-panel__gradient"></div>
-      </div>
+      <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
 
-      <div class="era-panel" data-era="assembly">
-        <img src="assets/eras/assembly.jpg" alt="Ford factory assembly line, 1913" class="era-photo" />
-        <div class="era-panel__gradient"></div>
-      </div>
+      <div class="relative mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
+        <span class="font-mono text-xs uppercase tracking-widest text-paper/60">Agenzi — AI Integration Studio</span>
 
-      <div class="era-panel" data-era="internet">
-        <img src="assets/eras/internet.jpg" alt="Data center and network infrastructure" class="era-photo" />
-        <div class="era-panel__gradient"></div>
-      </div>
+        <h1 class="mt-6 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+          Change has many names, and this time it's called
+          <span id="cycle-word" class="cycle-word">the printing press</span>.
+        </h1>
 
-      <div class="era-panel" data-era="smartphone">
-        <img src="assets/eras/smartphone.jpg" alt="Hand holding a smartphone" class="era-photo" />
-        <div class="era-panel__gradient"></div>
-      </div>
-
-      <div class="era-panel" data-era="ai">
-        <div class="era-panel__gradient era-panel__gradient--ai"></div>
-        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
-          <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
-            <path d="M600 260 C480 300 430 380 470 460 C400 480 360 550 400 620"/>
-            <path d="M600 260 C720 300 770 380 730 460 C800 480 840 550 800 620"/>
-            <path d="M600 250 C600 320 640 360 700 380"/>
-            <path d="M600 250 C600 320 560 360 500 380"/>
-          </g>
-          <circle cx="600" cy="470" r="70" fill="currentColor" stroke="none" opacity=".9"/>
-          <g fill="currentColor" stroke="none">
-            <circle cx="760" cy="220" r="8"/>
-            <circle cx="800" cy="260" r="5"/>
-            <circle cx="720" cy="180" r="10"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-
-    <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
-
-    <div class="relative mx-auto flex max-w-5xl flex-col items-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
-      <span class="font-mono text-xs uppercase tracking-widest text-paper/60">Agenzi — AI Integration Studio</span>
-
-      <h1 class="mt-6 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-        Change has many names, and this time it's called
-        <span id="cycle-word" class="cycle-word">the printing press</span>.
-      </h1>
-
-      <div class="mt-10">
-        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
-          Book free consultation
-        </a>
+        <div class="mt-10">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+            Book free consultation
+          </a>
+        </div>
       </div>
     </div>
 

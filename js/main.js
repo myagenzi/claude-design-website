@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       let i = 0;
       setActiveEra(0);
-      const QUICK_HOLD_MS = 750;
+      const QUICK_HOLD_MS = 450;
       const AI_HOLD_MS = 5000;
-      const SWAP_MS = 400;
+      const SWAP_MS = 250;
 
       const scheduleSwap = () => {
         const holdTime = words[i] === 'AI' ? AI_HOLD_MS : QUICK_HOLD_MS;
@@ -71,8 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ---- Scroll-triggered tunnel-zoom reveal ----
-  const revealTargets = document.querySelectorAll('.reveal-section');
+  // ---- Continuous scroll-driven tunnel zoom ----
+  // Your scroll position IS the zoom amount, every frame — not a threshold-
+  // triggered snap-in. Each section's .reveal-inner scales/fades/blurs based
+  // purely on how far its center sits from the viewport's center right now.
+  const zoomSections = Array.from(document.querySelectorAll('.reveal-section'));
   const tunnelBurst = document.getElementById('tunnel-burst');
   const fireTunnelBurst = () => {
     if (!tunnelBurst) return;
@@ -81,33 +84,73 @@ document.addEventListener('DOMContentLoaded', () => {
     tunnelBurst.classList.add('is-firing');
   };
 
-  if (prefersReducedMotion) {
-    revealTargets.forEach((el) => el.classList.add('is-visible'));
-  } else if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const target = entry.target;
-          if (entry.isIntersecting) {
-            target.classList.remove('is-exiting');
-            target.classList.add('is-visible');
-            fireTunnelBurst();
-          } else if (target.classList.contains('is-visible')) {
-            // Scrolled past the top: rush toward the camera and blow out, like exiting the tunnel.
-            // Scrolled back below before ever settling: just reset, no exit punch.
-            if (entry.boundingClientRect.top < 0) {
-              target.classList.add('is-exiting');
-            } else {
-              target.classList.remove('is-visible', 'is-exiting');
-            }
+  if (zoomSections.length) {
+    const zoomInners = zoomSections.map((section) => section.querySelector('.reveal-inner'));
+
+    if (prefersReducedMotion) {
+      zoomInners.forEach((inner) => {
+        if (!inner) return;
+        inner.style.opacity = '1';
+        inner.style.transform = 'none';
+        inner.style.filter = 'none';
+      });
+    } else {
+      const ZONE = 0.85; // fraction of viewport height the zoom ramps over
+      const MIN_SCALE = 0.2;
+      const MAX_SCALE = 2.2;
+      const wasBelowCenter = new Map();
+      let ticking = false;
+
+      const updateZoom = () => {
+        ticking = false;
+        const vh = window.innerHeight;
+        const viewportCenter = vh / 2;
+
+        zoomSections.forEach((section, idx) => {
+          const inner = zoomInners[idx];
+          if (!inner) return;
+          const onlyExit = section.classList.contains('zoom-only-exit');
+          const rect = section.getBoundingClientRect();
+          const d = (rect.top + rect.height / 2 - viewportCenter) / vh;
+
+          let scale;
+          let opacity;
+          let blur;
+          if (d >= 0) {
+            const t = onlyExit ? 0 : Math.min(d / ZONE, 1);
+            scale = 1 + t * (MIN_SCALE - 1);
+            opacity = 1 - t;
+            blur = t * 22;
+          } else {
+            const t = Math.min(-d / ZONE, 1);
+            scale = 1 + t * (MAX_SCALE - 1);
+            opacity = 1 - t;
+            blur = t * 16;
           }
+
+          inner.style.transform = `scale(${scale.toFixed(4)})`;
+          inner.style.opacity = opacity.toFixed(3);
+          inner.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+
+          const isBelowCenter = d > 0.02;
+          if (wasBelowCenter.get(section) && !isBelowCenter) {
+            fireTunnelBurst();
+          }
+          wasBelowCenter.set(section, isBelowCenter);
         });
-      },
-      { threshold: [0, 0.25], rootMargin: '0px 0px -10% 0px' }
-    );
-    revealTargets.forEach((el) => revealObserver.observe(el));
-  } else {
-    revealTargets.forEach((el) => el.classList.add('is-visible'));
+      };
+
+      const requestZoomUpdate = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateZoom);
+        }
+      };
+
+      window.addEventListener('scroll', requestZoomUpdate, { passive: true });
+      window.addEventListener('resize', requestZoomUpdate);
+      updateZoom();
+    }
   }
 
   // ---- Active nav link highlighting ----

@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Agenzi — AI Integration Studio</title>
 <meta name="description" content="Agenzi builds custom AI agents into your CRM, inbox, vendor management, and content pipelines — so the busywork runs itself." />
-<link rel="icon" href="assets/agenzi-logo.jpg" />
+<link rel="icon" href="assets/agenzi-mark.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<script src="js/tailwind-config.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="js/tailwind-config.js"></script>
 <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="font-sans text-ink antialiased">
@@ -18,23 +18,23 @@
 <header class="sticky top-0 z-50 border-b border-ink/10 bg-paper/80 backdrop-blur">
   <div class="mx-auto max-w-6xl px-6">
     <div class="flex h-16 items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <img src="assets/agenzi-logo.jpg" alt="Agenzi" class="h-9 w-9 rounded-full object-cover" />
+      <a href="#home" class="flex items-center gap-2">
+        <img src="assets/agenzi-mark.png" alt="Agenzi" class="h-10 w-10 object-contain" />
         <span class="font-display text-xl font-bold brand-gradient-text">Agenzi</span>
       </a>
 
       <nav class="hidden items-center gap-6 font-mono text-xs uppercase tracking-wider text-ink/70 md:flex">
-        <a href="index.html" class="nav-link" aria-current="page">Home</a>
-        <a href="greetings.html" class="nav-link">Greetings</a>
-        <a href="the-problem.html" class="nav-link">The Problem</a>
-        <a href="the-fix.html" class="nav-link">The Fix</a>
-        <a href="how-we-work.html" class="nav-link">How We Work</a>
-        <a href="pricing.html" class="nav-link">Pricing</a>
-        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="#home" class="nav-link" data-nav-link>Home</a>
+        <a href="#greetings" class="nav-link" data-nav-link>Greetings</a>
+        <a href="#the-problem" class="nav-link" data-nav-link>The Problem</a>
+        <a href="#the-fix" class="nav-link" data-nav-link>The Fix</a>
+        <a href="#how-we-work" class="nav-link" data-nav-link>How We Work</a>
+        <a href="#pricing" class="nav-link" data-nav-link>Pricing</a>
+        <a href="#contact" class="nav-link" data-nav-link>Contact</a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="contact.html" class="hidden items-center rounded-full bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition hover:bg-navy sm:inline-flex">
+        <a href="#contact" class="hidden items-center rounded-full bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition hover:bg-navy sm:inline-flex">
           Book free consultation
         </a>
         <button id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 md:hidden">
@@ -45,27 +45,162 @@
     </div>
 
     <div id="mobile-nav" class="pb-6 font-mono text-sm uppercase tracking-wider text-ink/70">
-      <a href="index.html">Home</a>
-      <a href="greetings.html">Greetings</a>
-      <a href="the-problem.html">The Problem</a>
-      <a href="the-fix.html">The Fix</a>
-      <a href="how-we-work.html">How We Work</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="contact.html">Contact</a>
-      <a href="contact.html" class="mt-2 inline-flex w-fit items-center rounded-full bg-ink px-5 py-2.5 text-paper">Book free consultation</a>
+      <a href="#home">Home</a>
+      <a href="#greetings">Greetings</a>
+      <a href="#the-problem">The Problem</a>
+      <a href="#the-fix">The Fix</a>
+      <a href="#how-we-work">How We Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="mt-2 inline-flex w-fit items-center rounded-full bg-ink px-5 py-2.5 text-paper">Book free consultation</a>
     </div>
   </div>
 </header>
 
 <main>
-  <section class="relative overflow-hidden">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-gradient-to-br from-navy via-violet to-magenta opacity-20 blur-3xl"></div>
-      <div class="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-10 blur-3xl"></div>
+
+  <!-- ============ HOME / HERO ============ -->
+  <section id="home" class="scroll-mt-16 relative overflow-hidden bg-ink text-paper" data-parallax-scope>
+    <div id="hero-scene" class="absolute inset-0" aria-hidden="true">
+      <div class="era-panel is-active" data-era="press">
+        <div class="era-panel__gradient"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="currentColor" stroke="none">
+            <rect x="120" y="620" width="620" height="34" rx="6"/>
+            <rect x="160" y="560" width="540" height="46" rx="8"/>
+            <rect x="330" y="220" width="200" height="52" rx="8"/>
+            <rect x="410" y="272" width="40" height="270"/>
+            <path d="M430 150 C360 210 360 300 430 340 C500 300 500 210 430 150 Z"/>
+            <rect x="620" y="330" width="220" height="26" rx="10"/>
+            <rect x="200" y="606" width="500" height="16"/>
+          </g>
+          <g stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round">
+            <path d="M180 700 L740 700"/>
+            <path d="M210 730 L320 660 M340 730 L450 660 M480 730 L590 660 M610 730 L700 660"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="era-panel" data-era="steam">
+        <div class="era-panel__gradient"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="currentColor" stroke="none">
+            <rect x="260" y="430" width="560" height="180" rx="26"/>
+            <rect x="720" y="380" width="140" height="120" rx="14"/>
+            <rect x="770" y="270" width="46" height="130" rx="10"/>
+            <circle cx="380" cy="660" r="80"/>
+            <circle cx="640" cy="660" r="80"/>
+            <circle cx="780" cy="660" r="52"/>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="4">
+            <circle cx="380" cy="660" r="34"/>
+            <circle cx="640" cy="660" r="34"/>
+          </g>
+          <g fill="currentColor" stroke="none" opacity=".8">
+            <circle cx="800" cy="220" r="42"/>
+            <circle cx="860" cy="160" r="58"/>
+            <circle cx="940" cy="110" r="70"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="era-panel" data-era="assembly">
+        <div class="era-panel__gradient"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="currentColor" stroke="none">
+            <rect x="160" y="560" width="760" height="24" rx="12"/>
+            <rect x="220" y="440" width="110" height="110" rx="10"/>
+            <rect x="400" y="440" width="110" height="110" rx="10"/>
+            <rect x="580" y="440" width="110" height="110" rx="10"/>
+            <rect x="760" y="440" width="110" height="110" rx="10"/>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M900 250 L900 400 L790 470"/>
+            <path d="M760 440 L830 480 L860 440"/>
+          </g>
+          <g fill="currentColor" stroke="none">
+            <circle cx="260" cy="610" r="18"/>
+            <circle cx="440" cy="610" r="18"/>
+            <circle cx="620" cy="610" r="18"/>
+            <circle cx="800" cy="610" r="18"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="era-panel" data-era="internet">
+        <div class="era-panel__gradient"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="none" stroke="currentColor" stroke-width="4">
+            <circle cx="600" cy="460" r="230"/>
+            <ellipse cx="600" cy="460" rx="230" ry="80"/>
+            <ellipse cx="600" cy="460" rx="230" ry="160"/>
+            <line x1="370" y1="460" x2="830" y2="460"/>
+            <line x1="600" y1="230" x2="600" y2="690"/>
+          </g>
+          <g fill="currentColor" stroke="none">
+            <circle cx="260" cy="260" r="14"/>
+            <circle cx="940" cy="290" r="18"/>
+            <circle cx="980" cy="560" r="12"/>
+            <circle cx="230" cy="620" r="16"/>
+            <circle cx="600" cy="150" r="12"/>
+            <circle cx="600" cy="770" r="14"/>
+          </g>
+          <g stroke="currentColor" stroke-width="2" opacity=".7">
+            <line x1="260" y1="260" x2="450" y2="360"/>
+            <line x1="940" y1="290" x2="760" y2="380"/>
+            <line x1="980" y1="560" x2="800" y2="500"/>
+            <line x1="230" y1="620" x2="420" y2="540"/>
+            <line x1="600" y1="150" x2="600" y2="230"/>
+            <line x1="600" y1="770" x2="600" y2="690"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="era-panel" data-era="smartphone">
+        <div class="era-panel__gradient"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="none" stroke="currentColor" stroke-width="10">
+            <rect x="470" y="130" width="260" height="640" rx="46"/>
+          </g>
+          <g fill="currentColor" stroke="none">
+            <rect x="560" y="168" width="80" height="10" rx="5"/>
+            <rect x="520" y="240" width="60" height="60" rx="14"/>
+            <rect x="600" y="240" width="60" height="60" rx="14"/>
+            <rect x="680" y="240" width="60" height="60" rx="14"/>
+            <rect x="520" y="320" width="60" height="60" rx="14"/>
+            <rect x="600" y="320" width="60" height="60" rx="14"/>
+            <rect x="680" y="320" width="60" height="60" rx="14"/>
+            <rect x="520" y="400" width="60" height="60" rx="14"/>
+            <rect x="600" y="400" width="60" height="60" rx="14"/>
+            <rect x="680" y="400" width="60" height="60" rx="14"/>
+            <rect x="560" y="700" width="80" height="8" rx="4"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="era-panel" data-era="ai">
+        <div class="era-panel__gradient era-panel__gradient--ai"></div>
+        <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
+          <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+            <path d="M600 260 C480 300 430 380 470 460 C400 480 360 550 400 620"/>
+            <path d="M600 260 C720 300 770 380 730 460 C800 480 840 550 800 620"/>
+            <path d="M600 250 C600 320 640 360 700 380"/>
+            <path d="M600 250 C600 320 560 360 500 380"/>
+          </g>
+          <circle cx="600" cy="470" r="70" fill="currentColor" stroke="none" opacity=".9"/>
+          <g fill="currentColor" stroke="none">
+            <circle cx="760" cy="220" r="8"/>
+            <circle cx="800" cy="260" r="5"/>
+            <circle cx="720" cy="180" r="10"/>
+          </g>
+        </svg>
+      </div>
     </div>
 
-    <div class="relative mx-auto flex max-w-5xl flex-col items-center px-6 py-28 text-center sm:py-36">
-      <span class="font-mono text-xs uppercase tracking-widest text-muted">Agenzi — AI Integration Studio</span>
+    <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
+
+    <div class="relative mx-auto flex max-w-5xl flex-col items-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
+      <span class="font-mono text-xs uppercase tracking-widest text-paper/60">Agenzi — AI Integration Studio</span>
 
       <h1 class="mt-6 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
         Change has many names, and this time it's called
@@ -73,42 +208,277 @@
       </h1>
 
       <div class="mt-10">
-        <a href="contact.html" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+          Book free consultation
+        </a>
+      </div>
+    </div>
+
+    <a href="#greetings" class="scroll-cue" aria-label="Scroll to next section">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ============ GREETINGS ============ -->
+  <section id="greetings" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-violet to-magenta opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 py-24">
+      <span class="font-mono text-xs uppercase tracking-widest text-muted">02 — Greetings</span>
+
+      <p class="reveal-title mt-6 font-display text-3xl font-semibold leading-snug tracking-tight sm:text-5xl">
+        Greetings, we are Agenzi and we will help this change be a new business rage at an exponential rate.
+      </p>
+
+      <div class="reveal-body mt-10">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
           Book free consultation
         </a>
       </div>
     </div>
   </section>
+
+  <!-- ============ THE PROBLEM ============ -->
+  <section id="the-problem" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="parallax-blob absolute -right-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-navy to-violet opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 py-24">
+      <span class="font-mono text-xs uppercase tracking-widest text-muted">03 — The Problem</span>
+
+      <p class="reveal-title mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
+        Let's face it. AI is like the pandemic that we did not expect.
+      </p>
+
+      <div class="reveal-body mt-6 space-y-6 text-lg leading-relaxed text-muted">
+        <p>But instead of locking you up in your busy-ness, it's handing you precious time as it handles your mundane tasks. The question is how quickly can you efficient-ize it. And this is where we come in.</p>
+        <p>Here at Agenzi we have agents who not only use AI proficiently but also are eagerly looking for new ways to integrate AI into different systems.</p>
+      </div>
+
+      <div class="reveal-body mt-10">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          Book free consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE FIX ============ -->
+  <section id="the-fix" class="scroll-mt-16 reveal-section relative flex min-h-screen items-center overflow-hidden bg-paper" data-parallax-scope>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-15 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 py-24">
+      <span class="font-mono text-xs uppercase tracking-widest text-muted">04 — The Fix</span>
+
+      <p class="reveal-title mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
+        From making that video to sending that important email.
+      </p>
+
+      <div class="reveal-body mt-6 text-lg leading-relaxed text-muted">
+        <p>From handling 10 vendors to sifting through the daily business chaos, the AI system we build into your business will do the rest of the tasking. If you've read till here, you might as well book a free consultation with us.</p>
+      </div>
+
+      <div class="reveal-body mt-10">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          Book free consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW WE WORK ============ -->
+  <section id="how-we-work" class="scroll-mt-16 reveal-section relative overflow-hidden bg-paper py-24 sm:py-28">
+    <div class="mx-auto max-w-5xl px-6">
+      <span class="draft-badge">Draft copy — pending client direction</span>
+
+      <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">05 — How We Work</span>
+      <h2 class="reveal-title mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+        No six-month rollout. No jargon. Just an agent that works.
+      </h2>
+      <p class="reveal-title mt-6 max-w-2xl text-lg text-muted">
+        Most "AI transformations" die in a slide deck. Ours don't, because we start with the annoying task you already hate and build outward from there.
+      </p>
+
+      <div class="reveal-body mt-16 grid gap-8 sm:grid-cols-2">
+        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-navy">Step 01</span>
+          <h3 class="mt-3 font-display text-2xl font-semibold">Tell us what's eating your week</h3>
+          <p class="mt-3 text-muted">A 30-minute call. No pitch deck. We ask what you're doing by hand that a computer should be doing instead: your inbox, your CRM, your vendor list, whatever it is.</p>
+        </div>
+
+        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-violet">Step 02</span>
+          <h3 class="mt-3 font-display text-2xl font-semibold">We map the agent to your systems</h3>
+          <p class="mt-3 text-muted">We look at what you already use (your CRM, your inbox, your spreadsheets) and design the agent to live inside them, not replace them.</p>
+        </div>
+
+        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-magenta">Step 03</span>
+          <h3 class="mt-3 font-display text-2xl font-semibold">We build it, then we show you</h3>
+          <p class="mt-3 text-muted">You get a working agent, not a prototype. We walk through it together and tune it against real tasks before it touches anything important.</p>
+        </div>
+
+        <div class="lift rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-gold">Step 04</span>
+          <h3 class="mt-3 font-display text-2xl font-semibold">We stick around</h3>
+          <p class="mt-3 text-muted">Systems change, your business changes, the agent should too. We keep it fed, tuned, and out of trouble.</p>
+        </div>
+      </div>
+
+      <div class="reveal-body mt-16">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          Book free consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="scroll-mt-16 reveal-section relative overflow-hidden bg-mist py-24 sm:py-28">
+    <div class="mx-auto max-w-5xl px-6">
+      <span class="draft-badge">Draft copy &amp; illustrative pricing — pending client direction</span>
+
+      <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">06 — Pricing</span>
+      <h2 class="reveal-title mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+        Straightforward pricing. No "contact us for a quote" games (well, one).
+      </h2>
+      <p class="reveal-title mt-6 max-w-2xl text-lg text-muted">
+        Every business's mess is different, so exact numbers get locked in on your free consultation. Here's the shape of it.
+      </p>
+
+      <div class="reveal-body mt-16 grid gap-8 lg:grid-cols-3">
+        <div class="lift flex flex-col rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-navy">Starter</span>
+          <p class="mt-3 font-display text-3xl font-bold">$1,500<span class="text-base font-normal text-muted">/mo</span></p>
+          <p class="mt-3 text-sm text-muted">One agent, one system. Good for testing the water: an inbox triager or a vendor tracker.</p>
+          <ul class="mt-6 space-y-2 text-sm text-muted">
+            <li>· 1 integrated system</li>
+            <li>· Build + 30 days of tuning</li>
+            <li>· Email support</li>
+          </ul>
+        </div>
+
+        <div class="lift flex flex-col rounded-2xl border-2 border-navy bg-white p-8 shadow-lg shadow-navy/10">
+          <span class="font-mono text-xs uppercase tracking-widest text-violet">Growth</span>
+          <p class="mt-3 font-display text-3xl font-bold">$3,500<span class="text-base font-normal text-muted">/mo</span></p>
+          <p class="mt-3 text-sm text-muted">Multiple agents across your CRM, inbox, and content pipeline, working together.</p>
+          <ul class="mt-6 space-y-2 text-sm text-muted">
+            <li>· Up to 3 integrated systems</li>
+            <li>· Build + 90 days of tuning</li>
+            <li>· Priority support</li>
+          </ul>
+        </div>
+
+        <div class="lift flex flex-col rounded-2xl border border-ink/10 bg-white p-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-magenta">Custom</span>
+          <p class="mt-3 font-display text-3xl font-bold">Let's talk</p>
+          <p class="mt-3 text-sm text-muted">Full operational buildout across every corner of the business. Scoped with you, not a template.</p>
+          <ul class="mt-6 space-y-2 text-sm text-muted">
+            <li>· Unlimited systems</li>
+            <li>· Dedicated build team</li>
+            <li>· Ongoing management</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reveal-body mt-16">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+          Book free consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="scroll-mt-16 reveal-section relative overflow-hidden bg-paper py-24 sm:py-28">
+    <div class="mx-auto max-w-5xl px-6">
+      <span class="draft-badge">Draft copy &amp; placeholder contact details — pending client direction</span>
+
+      <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">07 — Contact</span>
+      <h2 class="reveal-title mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+        Book free consultation
+      </h2>
+      <p class="reveal-title mt-6 max-w-2xl text-lg text-muted">
+        Tell us what's eating your week. Thirty minutes, no slide deck, no obligation.
+      </p>
+
+      <div class="reveal-body mt-14 grid gap-12 lg:grid-cols-5">
+        <form class="lg:col-span-3 grid grid-cols-1 gap-5 sm:grid-cols-2" action="#" method="post">
+          <div class="sm:col-span-1">
+            <label for="name" class="font-mono text-xs uppercase tracking-wider text-ink/70">Name</label>
+            <input id="name" name="name" type="text" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+          </div>
+          <div class="sm:col-span-1">
+            <label for="email" class="font-mono text-xs uppercase tracking-wider text-ink/70">Email</label>
+            <input id="email" name="email" type="email" required class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="business" class="font-mono text-xs uppercase tracking-wider text-ink/70">Business name</label>
+            <input id="business" name="business" type="text" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="message" class="font-mono text-xs uppercase tracking-wider text-ink/70">What's eating your week?</label>
+            <textarea id="message" name="message" rows="5" class="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/20"></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" class="inline-flex items-center rounded-full bg-ink px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-paper transition hover:bg-navy">
+              Book free consultation
+            </button>
+            <p class="mt-3 text-xs text-muted">This form isn't wired to a backend yet. Connect it to your form handler of choice before launch.</p>
+          </div>
+        </form>
+
+        <div class="lg:col-span-2">
+          <div class="rounded-2xl border border-ink/10 bg-mist p-8">
+            <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Reach us directly</span>
+            <p class="mt-3 font-display text-xl font-semibold">hello@agenzi.studio</p>
+            <p class="mt-1 text-sm text-muted">Placeholder, swap for the real inbox.</p>
+
+            <div class="mt-6 border-t border-ink/10 pt-6">
+              <span class="font-mono text-xs uppercase tracking-widest text-ink/40">Response time</span>
+              <p class="mt-2 text-sm text-muted">We reply within one business day. Usually faster.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="border-t border-ink/10 bg-mist">
   <div class="mx-auto max-w-6xl px-6 py-12">
     <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
       <div class="max-w-sm">
-        <a href="index.html" class="flex items-center gap-2">
-          <img src="assets/agenzi-logo.jpg" alt="Agenzi" class="h-8 w-8 rounded-full object-cover" />
+        <a href="#home" class="flex items-center gap-2">
+          <img src="assets/agenzi-mark.png" alt="Agenzi" class="h-9 w-9 object-contain" />
           <span class="font-display text-lg font-bold brand-gradient-text">Agenzi</span>
         </a>
-        <p class="mt-3 text-sm text-muted">We build the AI agents that quietly run your busywork — so you can go do the parts of the job you actually like.</p>
+        <p class="mt-3 text-sm text-muted">We build the AI agents that quietly run your busywork, so you can go do the parts of the job you actually like.</p>
       </div>
 
       <div class="grid grid-cols-2 gap-8 font-mono text-xs uppercase tracking-wider text-ink/70 sm:grid-cols-3">
         <div class="flex flex-col gap-2">
           <span class="text-ink/40">Site</span>
-          <a href="index.html" class="hover:text-navy">Home</a>
-          <a href="greetings.html" class="hover:text-navy">Greetings</a>
-          <a href="the-problem.html" class="hover:text-navy">The Problem</a>
-          <a href="the-fix.html" class="hover:text-navy">The Fix</a>
+          <a href="#home" class="hover:text-navy">Home</a>
+          <a href="#greetings" class="hover:text-navy">Greetings</a>
+          <a href="#the-problem" class="hover:text-navy">The Problem</a>
+          <a href="#the-fix" class="hover:text-navy">The Fix</a>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-ink/40">Studio</span>
-          <a href="how-we-work.html" class="hover:text-navy">How We Work</a>
-          <a href="pricing.html" class="hover:text-navy">Pricing</a>
-          <a href="contact.html" class="hover:text-navy">Contact</a>
+          <a href="#how-we-work" class="hover:text-navy">How We Work</a>
+          <a href="#pricing" class="hover:text-navy">Pricing</a>
+          <a href="#contact" class="hover:text-navy">Contact</a>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-ink/40">Get in touch</span>
-          <a href="contact.html" class="hover:text-navy">Book free consultation</a>
+          <a href="#contact" class="hover:text-navy">Book free consultation</a>
         </div>
       </div>
     </div>

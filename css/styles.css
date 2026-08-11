@@ -139,14 +139,11 @@ html {
   50% { transform: translateY(14px); opacity: 0.3; }
 }
 
-/* ===== Continuous scroll-zoom tunnel =====
-   Unlike a triggered enter/exit animation, the zoom here is driven every
-   frame straight from scroll position (see js/main.js), the same principle
-   as a scroll-linked zoom quilt: your scroll position IS the zoom amount,
-   continuously, not a snap-in transition. No CSS transition on transform/
-   opacity/filter here — JS sets them directly every frame so the zoom
-   tracks the scroll with zero lag. The outer .reveal-section keeps its
-   normal, untransformed layout box; only .reveal-inner is ever transformed. */
+/* ===== GSAP ScrollTrigger tunnel zoom =====
+   The scale/opacity/blur on .reveal-inner are scrubbed directly to scroll
+   position by ScrollTrigger (see js/main.js) — no CSS transition here,
+   GSAP owns these properties frame by frame. The outer .reveal-section
+   keeps its normal, untransformed layout box; only .reveal-inner moves. */
 .reveal-inner {
   display: block;
   will-change: transform, opacity, filter;

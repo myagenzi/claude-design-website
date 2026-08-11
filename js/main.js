@@ -71,10 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ---- Continuous scroll-driven tunnel zoom ----
-  // Your scroll position IS the zoom amount, every frame — not a threshold-
-  // triggered snap-in. Each section's .reveal-inner scales/fades/blurs based
-  // purely on how far its center sits from the viewport's center right now.
+  // ---- GSAP ScrollTrigger tunnel zoom ----
+  // Each section's .reveal-inner is scrubbed directly to scroll position:
+  // zooming in from tiny+blurred as the section approaches viewport center,
+  // then continuing to zoom out past it as you keep scrolling, so the zoom
+  // is always in lockstep with the scrollbar, never a triggered snap-in.
   const zoomSections = Array.from(document.querySelectorAll('.reveal-section'));
   const tunnelBurst = document.getElementById('tunnel-burst');
   const fireTunnelBurst = () => {
@@ -84,72 +85,58 @@ document.addEventListener('DOMContentLoaded', () => {
     tunnelBurst.classList.add('is-firing');
   };
 
-  if (zoomSections.length) {
-    const zoomInners = zoomSections.map((section) => section.querySelector('.reveal-inner'));
+  if (zoomSections.length && window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
 
     if (prefersReducedMotion) {
-      zoomInners.forEach((inner) => {
-        if (!inner) return;
-        inner.style.opacity = '1';
-        inner.style.transform = 'none';
-        inner.style.filter = 'none';
+      zoomSections.forEach((section) => {
+        const inner = section.querySelector('.reveal-inner');
+        if (inner) gsap.set(inner, { opacity: 1, scale: 1, filter: 'blur(0px)' });
       });
     } else {
-      const ZONE = 0.85; // fraction of viewport height the zoom ramps over
-      const MIN_SCALE = 0.2;
-      const MAX_SCALE = 2.2;
-      const wasBelowCenter = new Map();
-      let ticking = false;
+      zoomSections.forEach((section) => {
+        const inner = section.querySelector('.reveal-inner');
+        if (!inner) return;
+        const onlyExit = section.classList.contains('zoom-only-exit');
 
-      const updateZoom = () => {
-        ticking = false;
-        const vh = window.innerHeight;
-        const viewportCenter = vh / 2;
-
-        zoomSections.forEach((section, idx) => {
-          const inner = zoomInners[idx];
-          if (!inner) return;
-          const onlyExit = section.classList.contains('zoom-only-exit');
-          const rect = section.getBoundingClientRect();
-          const d = (rect.top + rect.height / 2 - viewportCenter) / vh;
-
-          let scale;
-          let opacity;
-          let blur;
-          if (d >= 0) {
-            const t = onlyExit ? 0 : Math.min(d / ZONE, 1);
-            scale = 1 + t * (MIN_SCALE - 1);
-            opacity = 1 - t;
-            blur = t * 22;
-          } else {
-            const t = Math.min(-d / ZONE, 1);
-            scale = 1 + t * (MAX_SCALE - 1);
-            opacity = 1 - t;
-            blur = t * 16;
-          }
-
-          inner.style.transform = `scale(${scale.toFixed(4)})`;
-          inner.style.opacity = opacity.toFixed(3);
-          inner.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
-
-          const isBelowCenter = d > 0.02;
-          if (wasBelowCenter.get(section) && !isBelowCenter) {
-            fireTunnelBurst();
-          }
-          wasBelowCenter.set(section, isBelowCenter);
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            // The hero is already at the top of the page on load, so its
+            // exit-only timeline has to start from "top top" (its natural
+            // resting position), not "top bottom" (which never occurs for
+            // the very first section — that would leave ScrollTrigger
+            // computing progress from a start point in the negative-scroll
+            // past, landing mid-timeline immediately on load).
+            start: onlyExit ? 'top top' : 'top bottom',
+            end: 'bottom top',
+            scrub: 0.3,
+          },
         });
-      };
 
-      const requestZoomUpdate = () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(updateZoom);
+        if (!onlyExit) {
+          tl.fromTo(
+            inner,
+            { scale: 0.2, opacity: 0, filter: 'blur(24px)' },
+            { scale: 1, opacity: 1, filter: 'blur(0px)', ease: 'none', duration: 1 }
+          );
+          tl.to(inner, { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 });
+        } else {
+          gsap.set(inner, { scale: 1, opacity: 1, filter: 'blur(0px)' });
+          tl.fromTo(
+            inner,
+            { scale: 1, opacity: 1, filter: 'blur(0px)' },
+            { scale: 2.2, opacity: 0, filter: 'blur(18px)', ease: 'none', duration: 1 }
+          );
         }
-      };
 
-      window.addEventListener('scroll', requestZoomUpdate, { passive: true });
-      window.addEventListener('resize', requestZoomUpdate);
-      updateZoom();
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          onEnter: fireTunnelBurst,
+          onEnterBack: fireTunnelBurst,
+        });
+      });
     }
   }
 

@@ -39,7 +39,7 @@ html {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.4s ease;
+  transition: opacity 0.9s ease;
 }
 .era-panel.is-active {
   opacity: 1;
@@ -139,28 +139,44 @@ html {
   50% { transform: translateY(14px); opacity: 0.3; }
 }
 
-/* ===== Tunnel / time-jump scroll reveal ===== */
-.reveal-section {
+/* ===== Tunnel / time-jump scroll reveal =====
+   The outer .reveal-section is what IntersectionObserver watches, and it
+   never gets a transform — scaling the observed element itself would shrink
+   its measured geometry and throw off enter/exit detection. All the visual
+   zoom lives on the .reveal-inner child instead, driven by the section's
+   is-visible / is-exiting state. */
+.reveal-inner {
+  display: block;
   opacity: 0;
   transform: scale(0.2);
   filter: blur(24px);
   transition:
-    opacity 0.85s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.95s cubic-bezier(0.19, 1, 0.22, 1),
-    filter 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.55s cubic-bezier(0.19, 1, 0.22, 1),
+    filter 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform, opacity, filter;
 }
-.reveal-section.is-visible {
+.reveal-section.is-visible .reveal-inner {
   opacity: 1;
   transform: scale(1);
   filter: blur(0);
+}
+/* Scrolled past: the section rushes toward the camera and blows past, like exiting the far end of the tunnel */
+.reveal-section.is-exiting .reveal-inner {
+  opacity: 0;
+  transform: scale(2.2);
+  filter: blur(18px);
+  transition:
+    opacity 0.45s cubic-bezier(0.7, 0, 0.84, 0),
+    transform 0.5s cubic-bezier(0.7, 0, 0.84, 0),
+    filter 0.45s ease;
 }
 
 .reveal-title {
   opacity: 0;
   transform: scale(1.6);
-  transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.1s,
-    transform 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0.1s;
+  transition: opacity 0.35s cubic-bezier(0.19, 1, 0.22, 1) 0.06s,
+    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0.06s;
 }
 .is-visible .reveal-title {
   opacity: 1;
@@ -170,15 +186,15 @@ html {
 .reveal-body {
   opacity: 0;
   transform: translateY(22px) scale(1.08);
-  transition: opacity 0.6s ease 0.32s, transform 0.6s ease 0.32s;
+  transition: opacity 0.35s ease 0.18s, transform 0.35s ease 0.18s;
 }
 .is-visible .reveal-body {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
-.reveal-body:nth-of-type(2) { transition-delay: 0.3s; }
-.reveal-body:nth-of-type(3) { transition-delay: 0.42s; }
-.reveal-body:nth-of-type(4) { transition-delay: 0.54s; }
+.reveal-body:nth-of-type(2) { transition-delay: 0.16s; }
+.reveal-body:nth-of-type(3) { transition-delay: 0.24s; }
+.reveal-body:nth-of-type(4) { transition-delay: 0.32s; }
 
 /* Ring-burst that fires at the moment a section punches through */
 .tunnel-burst {
@@ -199,19 +215,20 @@ html {
   opacity: 0;
 }
 .tunnel-burst.is-firing span {
-  animation: tunnel-ring 0.75s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation: tunnel-ring 0.55s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 .tunnel-burst.is-firing span:nth-child(1) { animation-delay: 0s; border-color: rgba(243, 168, 59, 0.9); }
-.tunnel-burst.is-firing span:nth-child(2) { animation-delay: 0.07s; border-color: rgba(193, 63, 160, 0.75); }
-.tunnel-burst.is-firing span:nth-child(3) { animation-delay: 0.14s; border-color: rgba(123, 79, 201, 0.65); }
-.tunnel-burst.is-firing span:nth-child(4) { animation-delay: 0.21s; border-color: rgba(38, 51, 158, 0.55); }
+.tunnel-burst.is-firing span:nth-child(2) { animation-delay: 0.05s; border-color: rgba(193, 63, 160, 0.75); }
+.tunnel-burst.is-firing span:nth-child(3) { animation-delay: 0.1s; border-color: rgba(123, 79, 201, 0.65); }
+.tunnel-burst.is-firing span:nth-child(4) { animation-delay: 0.15s; border-color: rgba(38, 51, 158, 0.55); }
 @keyframes tunnel-ring {
   0% { width: 40px; height: 40px; opacity: 1; }
   100% { width: 2400px; height: 2400px; opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-section,
+  .reveal-inner,
+  .reveal-section.is-exiting .reveal-inner,
   .reveal-title,
   .reveal-body {
     transition: none;

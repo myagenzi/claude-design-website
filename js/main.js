@@ -49,21 +49,25 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       let i = 0;
       setActiveEra(0);
-      const CYCLE_MS = 2400;
-      const SWAP_MS = 650;
-      const interval = setInterval(() => {
-        cycleEl.classList.add('is-swapping');
+      const QUICK_HOLD_MS = 750;
+      const AI_HOLD_MS = 5000;
+      const SWAP_MS = 400;
+
+      const scheduleSwap = () => {
+        const holdTime = words[i] === 'AI' ? AI_HOLD_MS : QUICK_HOLD_MS;
         setTimeout(() => {
-          i += 1;
-          cycleEl.textContent = words[i];
-          cycleEl.classList.remove('is-swapping');
-          setActiveEra(i);
-          if (words[i] === 'AI') {
-            cycleEl.classList.add('is-final');
-            clearInterval(interval);
-          }
-        }, SWAP_MS);
-      }, CYCLE_MS);
+          cycleEl.classList.add('is-swapping');
+          setTimeout(() => {
+            i = (i + 1) % words.length;
+            cycleEl.textContent = words[i];
+            cycleEl.classList.remove('is-swapping');
+            cycleEl.classList.toggle('is-final', words[i] === 'AI');
+            setActiveEra(i);
+            scheduleSwap();
+          }, SWAP_MS);
+        }, holdTime);
+      };
+      scheduleSwap();
     }
   }
 
@@ -81,16 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
     revealTargets.forEach((el) => el.classList.add('is-visible'));
   } else if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+      (entries) => {
         entries.forEach((entry) => {
+          const target = entry.target;
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
+            target.classList.remove('is-exiting');
+            target.classList.add('is-visible');
             fireTunnelBurst();
-            observer.unobserve(entry.target);
+          } else if (target.classList.contains('is-visible')) {
+            // Scrolled past the top: rush toward the camera and blow out, like exiting the tunnel.
+            // Scrolled back below before ever settling: just reset, no exit punch.
+            if (entry.boundingClientRect.top < 0) {
+              target.classList.add('is-exiting');
+            } else {
+              target.classList.remove('is-visible', 'is-exiting');
+            }
           }
         });
       },
-      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+      { threshold: [0, 0.25], rootMargin: '0px 0px -10% 0px' }
     );
     revealTargets.forEach((el) => revealObserver.observe(el));
   } else {

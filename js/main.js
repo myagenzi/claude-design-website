@@ -191,51 +191,87 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(draw);
   })();
 
-  // ---- GSAP ScrollTrigger pinned zoom ----
-  // Sections scroll into place normally — fully visible, no shrink, no blur
-  // approaching — then pin (genuinely locked in place, not just visually
-  // static) and hold at full clarity for a deliberate beat, then zoom-blur
-  // out and release into the next section. No entrance animation: a section
-  // that's invisible/tiny while it's still approaching in normal scroll (its
-  // pin hasn't engaged yet) is a dead, blank-looking stretch of scrolling —
-  // that "blur" was actually this gap, not the transition itself.
-  const zoomSections = Array.from(document.querySelectorAll('.reveal-section'));
+  // ---- Stacked cards: 3D depth tunnel ----
+  // CSS position:sticky does the actual pinning (see .stack-card__sticky in
+  // styles.css) — no JS pinning library needed. <main> carries the shared
+  // `perspective`, so every sticky card lives in the same 3D space. As you
+  // scroll through a card's own range, GSAP pushes the PREVIOUS card back
+  // along Z (it shrinks, dims, blurs, recedes) while the CURRENT card flies
+  // in from deep behind it (starts small/dark/blurred/far, arrives at full
+  // size, opacity, and clarity) — a push-through-the-stack feel.
+  const stackCards = Array.from(document.querySelectorAll('.stack-card'));
 
-  if (zoomSections.length && window.gsap && window.ScrollTrigger) {
+  if (stackCards.length && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
     if (prefersReducedMotion) {
-      zoomSections.forEach((section) => {
-        const inner = section.querySelector('.reveal-inner');
-        if (inner) gsap.set(inner, { opacity: 1, scale: 1 });
+      stackCards.forEach((card) => {
+        const sticky = card.querySelector('.stack-card__sticky');
+        if (sticky) gsap.set(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)' });
       });
     } else {
-      // Hold worth roughly two natural scroll gestures, then a short exit —
-      // the pin absorbs scroll input for this whole span, so it has to stay
-      // short or scrolling feels stuck.
-      const pinDistance = () => '+=' + Math.round(window.innerHeight * 1.6);
+      stackCards.forEach((card, i) => {
+        if (i === 0) return;
+        const sticky = card.querySelector('.stack-card__sticky');
+        const prevSticky = stackCards[i - 1].querySelector('.stack-card__sticky');
+        if (!sticky) return;
 
-      zoomSections.forEach((section) => {
-        const inner = section.querySelector('.reveal-inner');
-        if (!inner) return;
+        gsap.set(sticky, { z: -1400, scale: 0.35, opacity: 0, filter: 'blur(8px)' });
 
-        gsap.set(inner, { scale: 1, opacity: 1 });
-
+        // The card is already sliding up into view (in normal flow) for a
+        // full viewport height BEFORE its sticky pin engages — animating
+        // only across the pin window (top top -> bottom top) leaves that
+        // entire approach dead at the opacity:0 initial state, which reads
+        // as a blank gap. Instead, run the whole reveal across the actual
+        // approach (top hits viewport bottom -> top hits viewport top), so
+        // it finishes exactly as the card locks into its pinned hold.
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: pinDistance,
-            pin: true,
-            anticipatePin: 1,
-            scrub: 0.5,
+            trigger: card,
+            start: 'top bottom',
+            end: 'top top',
+            scrub: true,
           },
         });
-        // Position "2" leaves the first 2/3 of the pin as an implicit hold
-        // at the gsap.set values above — that's the reading window — then
-        // zooms out over the last 1/3.
-        tl.to(inner, { scale: 1.35, opacity: 0, ease: 'none', duration: 1 }, 2);
+
+        // Staggered, overlapping handoff: the previous card is already mostly
+        // gone by the time the incoming one is still arriving, and the
+        // incoming card is sharp again well before the previous one fully
+        // fades — so there's always one legible layer, never two blurred
+        // ones stacked on top of each other mid-scroll.
+        if (prevSticky) {
+          tl.to(prevSticky, { z: -700, scale: 0.85, opacity: 0, filter: 'blur(5px)', ease: 'power1.in', duration: 0.6 }, 0);
+        }
+        tl.to(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 0.7 }, 0.3);
       });
+    }
+  }
+
+  // ---- Fade-up reveal for content sections ----
+  const fadePanels = document.querySelectorAll('.fade-panel');
+  fadePanels.forEach((panel) => {
+    panel.querySelectorAll('.fade-item').forEach((item, i) => {
+      item.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+  if (fadePanels.length) {
+    if (prefersReducedMotion) {
+      fadePanels.forEach((panel) => panel.classList.add('is-visible'));
+    } else if ('IntersectionObserver' in window) {
+      const fadeObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              fadeObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      fadePanels.forEach((panel) => fadeObserver.observe(panel));
+    } else {
+      fadePanels.forEach((panel) => panel.classList.add('is-visible'));
     }
   }
 

@@ -109,14 +109,65 @@ html {
   50% { transform: translateY(14px); opacity: 0.3; }
 }
 
-/* ===== GSAP ScrollTrigger tunnel zoom =====
-   The scale/opacity/blur on .reveal-inner are scrubbed directly to scroll
-   position by ScrollTrigger (see js/main.js) — no CSS transition here,
-   GSAP owns these properties frame by frame. The outer .reveal-section
-   keeps its normal, untransformed layout box; only .reveal-inner moves. */
-.reveal-inner {
-  display: block;
+/* ===== 3D depth tunnel, stacked =====
+   Each .stack-card is a tall (150vh) scroll runway; its .stack-card__sticky
+   child pins itself to the viewport via native CSS position:sticky — no JS
+   pinning library involved. <main> carries the shared `perspective`, so
+   every card's sticky div sits in the same 3D space: as you scroll through
+   a card's own range, GSAP pushes the card ahead of it back along Z (it
+   shrinks, dims, blurs, and recedes) while the incoming card flies in from
+   deep behind it (starts small/dark/blurred/far, arrives at full size,
+   opacity, and clarity) — a push-through-the-stack feel, not a flat zoom or
+   a slide (see js/main.js). z-index keeps paint order correct regardless
+   of the simulated depth. */
+main {
+  perspective: 1600px;
+}
+.stack-card {
+  position: relative;
+  height: 150vh;
+}
+.stack-card__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+}
+.stack-card:not(:first-of-type) .stack-card__sticky {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-card__sticky {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ===== Fade-up sections =====
+   Simpler, non-pinned reveal for the content-heavy sections. .fade-item
+   children start lowered/transparent and settle into place once the
+   section crosses into view (see js/main.js IntersectionObserver). */
+.fade-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-panel.is-visible .fade-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-item {
+    transition: none;
+  }
 }
 
 /* ===== Mouse parallax ===== */

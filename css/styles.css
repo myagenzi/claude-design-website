@@ -18,96 +18,66 @@ html {
   color: transparent;
 }
 
-/* ===== Hero signature word-cycle ===== */
-.cycle-word {
-  display: inline-block;
-  transition: opacity 0.6s ease, transform 0.6s ease, color 0.6s ease;
-}
-.cycle-word.is-swapping {
-  opacity: 0;
-  transform: translateY(0.25em);
-}
-.cycle-word.is-final {
-  color: #F3A83B;
+/* ===== Hero: chaos-into-order reveal =====
+   #hero-particles is a canvas of drifting, disordered dots — "nobody's
+   judgment" — that snaps into the Agenzi swirl formation at the exact
+   moment the headline corrects itself to "your judgment" (see js/main.js).
+   The visual and the copy make the same point at the same instant. */
+#hero-particles {
+  width: 100%;
+  height: 100%;
 }
 
-/* ===== Hero era backgrounds ===== */
-#hero-scene {
-  color: #FAFAFC;
-}
-.era-panel {
-  position: absolute;
-  inset: 0;
+.hero-reveal {
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.era-panel.is-active {
+.hero-reveal.is-visible {
   opacity: 1;
+  transform: translateY(0);
 }
-.era-panel__gradient {
+
+.hero-judgment {
+  display: inline-block;
+  position: relative;
+  color: #C9807E;
+  transition: color 0.4s ease;
+}
+.hero-judgment::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 75% 30%, rgba(123, 79, 201, 0.55), transparent 55%),
-    linear-gradient(160deg, #0F1030 0%, #1B1F5C 45%, #3A2E7A 100%);
+  left: -3%;
+  right: -3%;
+  top: 52%;
+  height: 2.5px;
+  background: #E5484D;
+  transform: scaleX(0);
+  transform-origin: left;
 }
-.era-panel[data-era="steam"] .era-panel__gradient {
-  background:
-    radial-gradient(circle at 70% 35%, rgba(193, 63, 160, 0.5), transparent 55%),
-    linear-gradient(160deg, #14103A 0%, #3A1F6E 45%, #7B2F7E 100%);
+.hero-judgment.is-struck::after {
+  animation: hero-strike 0.3s ease forwards;
 }
-.era-panel[data-era="assembly"] .era-panel__gradient {
-  background:
-    radial-gradient(circle at 65% 40%, rgba(243, 168, 59, 0.28), transparent 55%),
-    linear-gradient(160deg, #180F2E 0%, #5B1F63 45%, #9A2C6E 100%);
+@keyframes hero-strike {
+  to { transform: scaleX(1); }
 }
-.era-panel[data-era="internet"] .era-panel__gradient {
-  background:
-    radial-gradient(circle at 60% 35%, rgba(38, 51, 158, 0.55), transparent 55%),
-    linear-gradient(160deg, #0B1440 0%, #1E2E85 45%, #4A2E9E 100%);
-}
-.era-panel[data-era="smartphone"] .era-panel__gradient {
-  background:
-    radial-gradient(circle at 68% 32%, rgba(193, 63, 160, 0.45), transparent 55%),
-    linear-gradient(160deg, #12102E 0%, #331E6E 45%, #7B2F8E 100%);
-}
-.era-panel__gradient--ai {
-  background:
-    radial-gradient(circle at 50% 55%, rgba(243, 168, 59, 0.55), transparent 60%),
-    linear-gradient(160deg, #12102E 0%, #291C5E 45%, #5C2A72 100%) !important;
-}
-.era-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.5) contrast(1.15) brightness(0.5);
-}
-.era-panel .era-panel__gradient {
-  mix-blend-mode: multiply;
-  opacity: 1;
-}
-.era-panel[data-era="ai"] .era-panel__gradient {
-  mix-blend-mode: normal;
-  opacity: 1;
-}
-.era-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.hero-judgment.is-final {
   color: #F3A83B;
-  opacity: 0.5;
 }
+.hero-judgment.is-final::after {
+  display: none;
+}
+
 .hero-vignette {
-  background: linear-gradient(180deg, rgba(8, 8, 20, 0.55) 0%, rgba(8, 8, 20, 0.38) 40%, rgba(8, 8, 20, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(8, 8, 20, 0.5) 0%, rgba(8, 8, 20, 0.3) 40%, rgba(8, 8, 20, 0.7) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cycle-word,
-  .era-panel {
+  .hero-reveal {
     transition: none;
+  }
+  .hero-judgment::after {
+    display: none;
   }
 }
 

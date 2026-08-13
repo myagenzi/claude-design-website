@@ -22,54 +22,174 @@ document.addEventListener('DOMContentLoaded', () => {
     el.textContent = new Date().getFullYear();
   });
 
-  // ---- Hero word cycle + synced era background crossfade ----
-  const cycleEl = document.getElementById('cycle-word');
-  const eraPanels = document.querySelectorAll('.era-panel');
-  const eras = ['press', 'steam', 'assembly', 'internet', 'smartphone', 'ai'];
-  const words = [
-    'the printing press',
-    'the steam engine',
-    'the assembly line',
-    'the internet',
-    'the smartphone',
-    'AI',
-  ];
+  // ---- Hero text reveal ----
+  const heroReveals = document.querySelectorAll('.hero-reveal');
+  const judgmentEl = document.getElementById('hero-judgment');
+  const STRIKE_DELAY = 2400;
+  const SWAP_DELAY = 2750;
 
-  const setActiveEra = (i) => {
-    eraPanels.forEach((panel) => {
-      panel.classList.toggle('is-active', panel.dataset.era === eras[i]);
+  if (prefersReducedMotion) {
+    heroReveals.forEach((el) => el.classList.add('is-visible'));
+    if (judgmentEl) {
+      judgmentEl.textContent = 'your judgment';
+      judgmentEl.classList.add('is-final');
+    }
+  } else {
+    heroReveals.forEach((el) => {
+      const delay = Number(el.dataset.delay || 0);
+      setTimeout(() => el.classList.add('is-visible'), delay);
     });
-  };
-
-  if (cycleEl) {
-    if (prefersReducedMotion) {
-      cycleEl.textContent = 'AI';
-      cycleEl.classList.add('is-final');
-      setActiveEra(eras.length - 1);
-    } else {
-      let i = 0;
-      setActiveEra(0);
-      const QUICK_HOLD_MS = 450;
-      const AI_HOLD_MS = 5000;
-      const SWAP_MS = 250;
-
-      const scheduleSwap = () => {
-        const holdTime = words[i] === 'AI' ? AI_HOLD_MS : QUICK_HOLD_MS;
-        setTimeout(() => {
-          cycleEl.classList.add('is-swapping');
-          setTimeout(() => {
-            i = (i + 1) % words.length;
-            cycleEl.textContent = words[i];
-            cycleEl.classList.remove('is-swapping');
-            cycleEl.classList.toggle('is-final', words[i] === 'AI');
-            setActiveEra(i);
-            scheduleSwap();
-          }, SWAP_MS);
-        }, holdTime);
-      };
-      scheduleSwap();
+    if (judgmentEl) {
+      setTimeout(() => judgmentEl.classList.add('is-struck'), STRIKE_DELAY);
+      setTimeout(() => {
+        judgmentEl.textContent = 'your judgment';
+        judgmentEl.classList.remove('is-struck');
+        judgmentEl.classList.add('is-final');
+      }, SWAP_DELAY);
     }
   }
+
+  // ---- Hero particles: chaos settles into the Agenzi swirl ----
+  // A field of drifting, disordered dots — visual shorthand for "nobody's
+  // judgment" — snaps into the logo's spiral formation at the same instant
+  // the headline corrects itself to "your judgment". The copy and the
+  // visual land the same point together, not as two separate effects.
+  (() => {
+    const canvas = document.getElementById('hero-particles');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+
+    const BRAND_COLORS = ['#26339E', '#7B4FC9', '#C13FA0'];
+    const GOLD = '#F3A83B';
+    const ARMS = 4;
+    const PER_ARM = 22;
+    const CORE_COUNT = 8;
+
+    let w = 0;
+    let h = 0;
+    let particles = [];
+    let phase = prefersReducedMotion ? 'settled' : 'chaos';
+    let settleStart = 0;
+    let rotation = 0;
+    const SETTLE_MS = 1300;
+
+    function buildParticles() {
+      const cx = w / 2;
+      const cy = h * 0.48;
+      const maxR = Math.min(w, h) * 0.52;
+      particles = [];
+
+      for (let a = 0; a < ARMS; a++) {
+        const baseAngle = (a / ARMS) * Math.PI * 2;
+        for (let i = 0; i < PER_ARM; i++) {
+          const t = i / (PER_ARM - 1);
+          const radius = maxR * (0.18 + t * 0.82);
+          const angle = baseAngle + t * Math.PI * 1.35;
+          particles.push({
+            cx,
+            cy,
+            radius,
+            angle,
+            x: phase === 'chaos' ? Math.random() * w : cx + radius * Math.cos(angle + rotation),
+            y: phase === 'chaos' ? Math.random() * h : cy + radius * Math.sin(angle + rotation),
+            vx: (Math.random() - 0.5) * 0.9,
+            vy: (Math.random() - 0.5) * 0.9,
+            r: 1.4 + Math.random() * 1.6,
+            color: BRAND_COLORS[a % BRAND_COLORS.length],
+            core: false,
+          });
+        }
+      }
+      for (let i = 0; i < CORE_COUNT; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 9;
+        particles.push({
+          cx,
+          cy,
+          radius,
+          angle,
+          x: phase === 'chaos' ? Math.random() * w : cx + radius * Math.cos(angle),
+          y: phase === 'chaos' ? Math.random() * h : cy + radius * Math.sin(angle),
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: (Math.random() - 0.5) * 0.9,
+          r: 2 + Math.random() * 2,
+          color: GOLD,
+          core: true,
+        });
+      }
+    }
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildParticles();
+    }
+
+    function startSettle() {
+      if (phase !== 'chaos') return;
+      phase = 'settling';
+      settleStart = performance.now();
+      particles.forEach((p) => {
+        p.sx = p.x;
+        p.sy = p.y;
+      });
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function draw(timestamp) {
+      ctx.clearRect(0, 0, w, h);
+
+      if (phase === 'settled') {
+        rotation += 0.00012;
+      }
+
+      particles.forEach((p) => {
+        if (phase === 'chaos') {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+        } else if (phase === 'settling') {
+          const t = Math.min((timestamp - settleStart) / SETTLE_MS, 1);
+          const e = easeOutCubic(t);
+          const tx = p.cx + p.radius * Math.cos(p.angle + rotation);
+          const ty = p.cy + p.radius * Math.sin(p.angle + rotation);
+          p.x = p.sx + (tx - p.sx) * e;
+          p.y = p.sy + (ty - p.sy) * e;
+          if (t >= 1) phase = 'settled';
+        } else {
+          p.x = p.cx + p.radius * Math.cos(p.angle + rotation);
+          p.y = p.cy + p.radius * Math.sin(p.angle + rotation);
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.globalAlpha = p.core ? 0.9 : 0.62;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = p.core ? 12 : 5;
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    if (!prefersReducedMotion) {
+      setTimeout(startSettle, SWAP_DELAY);
+    }
+    requestAnimationFrame(draw);
+  })();
 
   // ---- GSAP ScrollTrigger pinned zoom ----
   // Sections scroll into place normally — fully visible, no shrink, no blur

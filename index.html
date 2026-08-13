@@ -64,62 +64,23 @@
   <!-- ============ HOME / HERO ============ -->
   <section id="home" class="scroll-mt-16 reveal-section relative min-h-screen overflow-hidden bg-ink text-paper" data-parallax-scope>
     <div class="reveal-inner absolute inset-0">
-      <div id="hero-scene" class="absolute inset-0" aria-hidden="true">
-        <div class="era-panel is-active" data-era="press">
-          <img src="assets/eras/press.jpg" alt="Antique hand-operated printing press" class="era-photo" />
-          <div class="era-panel__gradient"></div>
-        </div>
-
-        <div class="era-panel" data-era="steam">
-          <img src="assets/eras/steam.jpg" alt="Steam locomotive" class="era-photo" />
-          <div class="era-panel__gradient"></div>
-        </div>
-
-        <div class="era-panel" data-era="assembly">
-          <img src="assets/eras/assembly.jpg" alt="Ford factory assembly line, 1913" class="era-photo" />
-          <div class="era-panel__gradient"></div>
-        </div>
-
-        <div class="era-panel" data-era="internet">
-          <img src="assets/eras/internet.jpg" alt="Data center and network infrastructure" class="era-photo" />
-          <div class="era-panel__gradient"></div>
-        </div>
-
-        <div class="era-panel" data-era="smartphone">
-          <img src="assets/eras/smartphone.jpg" alt="Hand holding a smartphone" class="era-photo" />
-          <div class="era-panel__gradient"></div>
-        </div>
-
-        <div class="era-panel" data-era="ai">
-          <div class="era-panel__gradient era-panel__gradient--ai"></div>
-          <svg viewBox="0 0 1200 900" class="era-art" preserveAspectRatio="xMidYMid slice">
-            <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
-              <path d="M600 260 C480 300 430 380 470 460 C400 480 360 550 400 620"/>
-              <path d="M600 260 C720 300 770 380 730 460 C800 480 840 550 800 620"/>
-              <path d="M600 250 C600 320 640 360 700 380"/>
-              <path d="M600 250 C600 320 560 360 500 380"/>
-            </g>
-            <circle cx="600" cy="470" r="70" fill="currentColor" stroke="none" opacity=".9"/>
-            <g fill="currentColor" stroke="none">
-              <circle cx="760" cy="220" r="8"/>
-              <circle cx="800" cy="260" r="5"/>
-              <circle cx="720" cy="180" r="10"/>
-            </g>
-          </svg>
-        </div>
-      </div>
+      <canvas id="hero-particles" class="absolute inset-0" aria-hidden="true"></canvas>
 
       <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
 
-      <div class="relative mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
-        <span class="font-mono text-xs uppercase tracking-widest text-paper/60">Agenzi — AI Integration Studio</span>
+      <div class="relative mx-auto flex h-full max-w-4xl flex-col items-center justify-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
+        <span class="hero-reveal font-mono text-xs uppercase tracking-widest text-paper/60" data-delay="0">Agenzi — AI Integration Studio</span>
 
-        <h1 class="mt-6 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-          Change has many names, and this time it's called
-          <span id="cycle-word" class="cycle-word">the printing press</span>.
+        <h1 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+          <span class="hero-reveal block" data-delay="250">Every business is about to run on AI.</span>
+          <span class="hero-reveal block" data-delay="1000">The only question is whether it runs on <span id="hero-judgment" class="hero-judgment">nobody's</span>.</span>
         </h1>
 
-        <div class="mt-10">
+        <p class="hero-reveal mt-6 max-w-xl text-lg text-paper/70" data-delay="3100">
+          We don't sell you a tool. We build the agent that already knows your business — before it touches a single customer.
+        </p>
+
+        <div class="hero-reveal mt-10" data-delay="3500">
           <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
             Book free consultation
           </a>
@@ -166,12 +127,12 @@
         <span class="font-mono text-xs uppercase tracking-widest text-muted">03 — The Problem</span>
 
         <p class="reveal-title mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
-          Let's face it. AI is like the pandemic that we did not expect.
+          Everyone's adding AI right now. Almost none of it is working.
         </p>
 
         <div class="reveal-body mt-6 space-y-6 text-lg leading-relaxed text-muted">
-          <p>But instead of locking you up in your busy-ness, it's handing you precious time as it handles your mundane tasks. The question is how quickly can you efficient-ize it. And this is where we come in.</p>
-          <p>Here at Agenzi we have agents who not only use AI proficiently but also are eagerly looking for new ways to integrate AI into different systems.</p>
+          <p>Most businesses bolt on a tool, watch it say something confidently wrong to a customer, and quietly turn it off.</p>
+          <p class="font-display text-2xl font-semibold text-paper">That's the part we fix.</p>
         </div>
 
         <div class="reveal-body mt-10">
@@ -194,11 +155,11 @@
         <span class="font-mono text-xs uppercase tracking-widest text-muted">04 — The Fix</span>
 
         <p class="reveal-title mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
-          From making that video to sending that important email.
+          We sit inside your business long enough to know what "good" looks like.
         </p>
 
         <div class="reveal-body mt-6 text-lg leading-relaxed text-muted">
-          <p>From handling 10 vendors to sifting through the daily business chaos, the AI system we build into your business will do the rest of the tasking. If you've read till here, you might as well book a free consultation with us.</p>
+          <p>How you talk to a client. What your CRM should never forget. Which vendor emails actually matter. Then we build the agent that acts on it, not a demo or a chatbot that nods along, but something that runs your busywork the way you would, if you had the time.</p>
         </div>
 
         <div class="reveal-body mt-10">
@@ -404,7 +365,7 @@
 
     <div class="mt-10 flex flex-col gap-2 border-t border-paper/10 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
       <p>© <span data-year></span> Agenzi. All rights reserved.</p>
-      <p class="font-mono uppercase tracking-wider">Change has many names.</p>
+      <p class="font-mono uppercase tracking-wider">The judgment AI doesn't have.</p>
     </div>
   </div>
 </footer>

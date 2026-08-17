@@ -393,6 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (stackCards.length && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
+    // Mobile browsers resize the viewport (address bar show/hide) as you
+    // scroll; without this, that resize makes ScrollTrigger re-measure
+    // mid-scroll and can snap triggers to the wrong progress.
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     if (prefersReducedMotion) {
       stackCards.forEach((card) => {
@@ -458,6 +462,16 @@ document.addEventListener('DOMContentLoaded', () => {
           tl.to(currentBlob, { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.7 }, 0.3);
         }
       });
+
+      // Each ScrollTrigger above renders its current progress the instant
+      // it's created, using whatever layout info exists at that moment —
+      // on tall, narrow (mobile-shaped) viewports this can measure a later
+      // trigger's range as already "behind" scroll position 0, snapping
+      // its color forward immediately (e.g. the header opening on gold
+      // instead of magenta). A refresh once everything is registered
+      // forces every trigger to re-measure against final layout and
+      // re-render from the correct scroll position.
+      ScrollTrigger.refresh();
     }
   }
 

@@ -368,14 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(draw);
   })();
 
-  // ---- Stacked cards: 3D depth tunnel ----
-  // CSS position:sticky does the actual pinning (see .stack-card__sticky in
-  // styles.css) — no JS pinning library needed. <main> carries the shared
-  // `perspective`, so every sticky card lives in the same 3D space. As you
-  // scroll through a card's own range, GSAP pushes the PREVIOUS card back
-  // along Z (it shrinks, dims, blurs, recedes) while the CURRENT card flies
-  // in from deep behind it (starts small/dark/blurred/far, arrives at full
-  // size, opacity, and clarity) — a push-through-the-stack feel.
+  // ---- Stacked cards: text-only crossfade ----
+  // CSS position:sticky does the actual pinning and stacking (see
+  // .stack-card__sticky in styles.css) — its background is always full-bleed
+  // and never transforms, so there's no shrinking/growing box to see as one
+  // section covers the next. Only the text (.stack-card__content) fades and
+  // un-blurs in as its section arrives, and fades out as the next section
+  // covers it — the words are the only thing that visibly moves; the page's
+  // color glow (below) carries the rest of the motion.
   const stackCards = Array.from(document.querySelectorAll('.stack-card'));
 
   // ---- Per-page color identity: header accent + corner glow rotation ----
@@ -396,8 +396,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prefersReducedMotion) {
       stackCards.forEach((card) => {
-        const sticky = card.querySelector('.stack-card__sticky');
-        if (sticky) gsap.set(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)' });
+        const content = card.querySelector('.stack-card__content');
+        if (content) gsap.set(content, { opacity: 1, filter: 'blur(0px)' });
       });
       glowBlobs.forEach((blob) => {
         if (blob) gsap.set(blob, { opacity: 1, scale: 1 });
@@ -410,11 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       stackCards.forEach((card, i) => {
         if (i === 0) return;
-        const sticky = card.querySelector('.stack-card__sticky');
-        const prevSticky = stackCards[i - 1].querySelector('.stack-card__sticky');
-        if (!sticky) return;
-
-        gsap.set(sticky, { z: -1400, scale: 0.35, opacity: 0, filter: 'blur(8px)' });
+        const content = card.querySelector('.stack-card__content');
+        const prevContent = stackCards[i - 1].querySelector('.stack-card__content');
+        if (!content) return;
 
         // The card is already sliding up into view (in normal flow) for a
         // full viewport height BEFORE its sticky pin engages — animating
@@ -432,20 +430,22 @@ document.addEventListener('DOMContentLoaded', () => {
           },
         });
 
-        // Staggered, overlapping handoff: the previous card is already mostly
-        // gone by the time the incoming one is still arriving, and the
-        // incoming card is sharp again well before the previous one fully
+        // Staggered, overlapping handoff: the outgoing text is already mostly
+        // faded by the time the incoming text is still arriving, and the
+        // incoming text is sharp again well before the outgoing one fully
         // fades — so there's always one legible layer, never two blurred
-        // ones stacked on top of each other mid-scroll.
-        if (prevSticky) {
-          tl.to(prevSticky, { z: -700, scale: 0.85, opacity: 0, filter: 'blur(5px)', ease: 'power1.in', duration: 0.6 }, 0);
+        // ones stacked on top of each other mid-scroll. Only opacity/blur
+        // animate here (no transform) so this never fights with the
+        // mouse-parallax translate already applied to these same elements.
+        if (prevContent) {
+          tl.to(prevContent, { opacity: 0, filter: 'blur(4px)', ease: 'power1.in', duration: 0.6 }, 0);
         }
-        tl.to(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 0.7 }, 0.3);
+        tl.to(content, { opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 0.7 }, 0.3);
 
         // Header tints to the incoming page's color, and its glow blob
         // swaps corners with it — the outgoing blob fades on the same
-        // beat as the outgoing card, the incoming one settles into its
-        // corner on the same beat as the incoming card.
+        // beat as the outgoing text, the incoming one settles into its
+        // corner on the same beat as the incoming text.
         if (headerAccent) {
           tl.to(headerAccent, { backgroundColor: PAGE_COLORS[i], ease: 'none' }, 0);
         }

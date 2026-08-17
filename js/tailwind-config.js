@@ -11,10 +11,11 @@ tailwind.config = {
         paper: '#FAFAFC',
         muted: '#9A9AB4',
         charcoal: '#17172C',
+        carbon: '#0B0B0D',
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'sans-serif'],
-        sans: ['"Instrument Sans"', 'sans-serif'],
+        sans: ['"Bricolage Grotesque"', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
     },

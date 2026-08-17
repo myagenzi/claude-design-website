@@ -3,12 +3,91 @@
   color: #FAFAFC;
 }
 
+/* ===== Carbon black =====
+   One continuous dark surface for the whole page, styled like an
+   automotive carbon-black paint job: a neutral near-black base with a
+   single soft light sheen sweeping across it — fixed to the viewport so it
+   reads as one unbroken panel, not a stack of flat section colors. */
 body {
-  background-color: #16162E;
+  background-color: #0B0B0D;
+  background-image:
+    radial-gradient(ellipse 140% 60% at 20% -10%, rgba(255, 255, 255, 0.05), transparent 55%),
+    radial-gradient(ellipse 120% 55% at 100% 110%, rgba(123, 79, 201, 0.07), transparent 60%);
+  background-attachment: fixed, fixed;
+  background-size: cover, cover;
 }
 
 html {
   scroll-behavior: smooth;
+  font-optical-sizing: auto;
+}
+
+/* ===== Brand color text =====
+   Every piece of text reads in the Agenzi brand violet — the signature
+   tone from the "Agenzi" logotype's gradient — against the carbon-black
+   surface, instead of a tiered paper/muted palette. This is a solid color,
+   not the logotype's gradient-clip: gradient-clipped text on wrapped,
+   multi-line copy hits a real paint bug (the clip mask goes stale across
+   reflow/line-wrap, e.g. web-font swap, and shows as garbled overlapping
+   glyphs), so the gradient stays reserved for the short, single-line
+   "Agenzi" wordmark (.brand-gradient-text) where it's safe. Functional
+   color cues (the hero's strike-through reveal, draft-badge warnings, and
+   button labels that need solid contrast against their own pill) are
+   excluded on purpose — flattening those would remove information, not
+   just style. */
+h1, h2, h3, h4, h5, h6,
+p, li, label, dt, dd, td, th, figcaption, blockquote,
+a:not(.press),
+span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-gradient-text) {
+  color: #7B4FC9 !important;
+}
+
+/* ===== Response: press feedback =====
+   Feedback belongs on the press, not the release — an interface that only
+   reacts on click-up reads as laggy even when it isn't. */
+.press {
+  transition: transform 100ms ease-out, background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.press:active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .press:active {
+    transform: none;
+  }
+}
+
+/* ===== Header chrome: scroll-edge fade, not a hard divider =====
+   A crisp 1px border under floating chrome reads as a UI seam; a soft
+   fade where content passes underneath reads as a material with depth. */
+.chrome-edge {
+  position: relative;
+}
+.chrome-edge::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 14px;
+  background: linear-gradient(to bottom, rgba(8, 8, 20, 0.28), transparent);
+  pointer-events: none;
+}
+@media (prefers-reduced-transparency: reduce) {
+  header {
+    background-color: #17172C !important;
+    backdrop-filter: none !important;
+  }
+}
+@media (prefers-contrast: more) {
+  header {
+    background-color: #0D0D1A !important;
+    backdrop-filter: none !important;
+    border-bottom: 1px solid rgba(250, 250, 252, 0.3);
+  }
+  .chrome-edge::after {
+    display: none;
+  }
 }
 
 .brand-gradient-text {
@@ -196,18 +275,38 @@ main {
   width: 100%;
 }
 
-/* Mobile nav */
+/* Mobile nav — materializes rather than snapping open. Blur, scale, and
+   opacity move together so the panel reads as a surface arriving, not a
+   flat fade (see apple-design skill, "materialize, don't just fade"). */
 #mobile-nav {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  filter: blur(6px);
+  pointer-events: none;
+  transition: max-height 320ms ease, opacity 220ms ease, transform 260ms ease, filter 260ms ease;
 }
 #mobile-nav.menu-open {
-  display: flex;
+  max-height: 480px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
 }
 @media (min-width: 768px) {
   #mobile-nav {
     display: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #mobile-nav {
+    transform: none;
+    filter: none;
+    transition: max-height 150ms ease, opacity 150ms ease;
   }
 }
 

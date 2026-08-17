@@ -8,16 +8,16 @@
 <link rel="icon" href="assets/agenzi-mark.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="js/tailwind-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="font-sans text-paper antialiased bg-ink">
+<body class="font-sans text-paper antialiased">
 
-<header class="sticky top-0 z-50 border-b border-paper/10 bg-charcoal/80 backdrop-blur">
+<header class="chrome-edge sticky top-0 z-50 bg-carbon/80 backdrop-blur">
   <div class="mx-auto max-w-6xl px-6">
     <div class="flex h-16 items-center justify-between">
       <a href="#home" class="flex items-center gap-2">
@@ -36,10 +36,10 @@
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="hidden items-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink transition hover:bg-gold sm:inline-flex">
+        <a href="#contact" class="hidden items-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink press hover:bg-gold sm:inline-flex">
           Book free consultation
         </a>
-        <button id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 md:hidden">
+        <button id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" class="press inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 md:hidden">
           <span class="sr-only">Toggle menu</span>
           <span aria-hidden="true">☰</span>
         </button>
@@ -54,7 +54,7 @@
       <a href="#how-we-work">How We Work</a>
       <a href="#pricing">Pricing</a>
       <a href="#contact">Contact</a>
-      <a href="#contact" class="mt-2 inline-flex w-fit items-center rounded-full bg-paper px-5 py-2.5 text-ink">Book free consultation</a>
+      <a href="#contact" class="press mt-2 inline-flex w-fit items-center rounded-full bg-paper px-5 py-2.5 text-ink hover:bg-gold">Book free consultation</a>
     </div>
   </div>
 </header>
@@ -63,7 +63,7 @@
 
   <!-- ============ HOME / HERO ============ -->
   <section id="home" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[10] bg-ink text-paper" data-parallax-scope>
+    <div class="stack-card__sticky z-[10] bg-carbon text-paper" data-parallax-scope>
       <canvas id="hero-particles" class="absolute inset-0" aria-hidden="true"></canvas>
 
       <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
@@ -71,7 +71,7 @@
       <div class="relative mx-auto flex h-full max-w-4xl flex-col items-center justify-center px-6 py-32 text-center sm:py-44" data-parallax-target data-parallax-depth="10">
         <span class="hero-reveal font-mono text-xs uppercase tracking-widest text-paper/60" data-delay="0">Agenzi — AI Integration Studio</span>
 
-        <h1 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+        <h1 class="mt-6 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl sm:tracking-[-0.04em]">
           <span class="hero-reveal block" data-delay="250">Every business is about to run on AI.</span>
           <span class="hero-reveal block" data-delay="1000">The only question is whether it runs on <span id="hero-judgment" class="hero-judgment">nobody's</span>.</span>
         </h1>
@@ -81,7 +81,7 @@
         </p>
 
         <div class="hero-reveal mt-10" data-delay="3500">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -95,7 +95,7 @@
 
   <!-- ============ GREETINGS / OUR TAKE ============ -->
   <section id="greetings" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[11] bg-ink" data-parallax-scope>
+    <div class="stack-card__sticky z-[11] bg-carbon" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-violet to-magenta opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -103,12 +103,12 @@
       <div class="relative mx-auto max-w-3xl px-6 py-24">
         <span class="font-mono text-xs uppercase tracking-widest text-muted">02 — Our Take</span>
 
-        <p class="mt-6 font-display text-3xl font-semibold leading-snug tracking-tight sm:text-5xl">
+        <p class="mt-6 font-display text-3xl font-semibold leading-snug tracking-tight sm:text-5xl sm:tracking-[-0.035em]">
           Most AI is smart. Almost none of it knows your business. We build the kind that does. Judgment included.
         </p>
 
         <div class="mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -118,7 +118,7 @@
 
   <!-- ============ THE PROBLEM ============ -->
   <section id="the-problem" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[12] bg-charcoal" data-parallax-scope>
+    <div class="stack-card__sticky z-[12] bg-carbon" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="parallax-blob absolute -right-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-navy to-violet opacity-25 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -126,7 +126,7 @@
       <div class="relative mx-auto max-w-3xl px-6 py-24">
         <span class="font-mono text-xs uppercase tracking-widest text-muted">03 — The Problem</span>
 
-        <p class="mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
+        <p class="mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl sm:tracking-[-0.03em]">
           Everyone's adding AI right now. Almost none of it is working.
         </p>
 
@@ -136,7 +136,7 @@
         </div>
 
         <div class="mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -146,7 +146,7 @@
 
   <!-- ============ THE FIX ============ -->
   <section id="the-fix" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[13] bg-ink" data-parallax-scope>
+    <div class="stack-card__sticky z-[13] bg-carbon" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -154,7 +154,7 @@
       <div class="relative mx-auto max-w-3xl px-6 py-24">
         <span class="font-mono text-xs uppercase tracking-widest text-muted">04 — The Fix</span>
 
-        <p class="mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
+        <p class="mt-6 font-display text-2xl font-medium leading-snug tracking-tight sm:text-4xl sm:tracking-[-0.03em]">
           We sit inside your business long enough to know what "good" looks like.
         </p>
 
@@ -163,7 +163,7 @@
         </div>
 
         <div class="mt-10">
-          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+          <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
             Book free consultation
           </a>
         </div>
@@ -173,10 +173,10 @@
 
   <!-- ============ END OF STACK — normal flow resumes below ============ -->
   <!-- ============ HOW WE WORK ============ -->
-  <section id="how-we-work" class="scroll-mt-16 fade-section relative overflow-hidden bg-charcoal py-24 sm:py-28">
+  <section id="how-we-work" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="font-mono text-xs uppercase tracking-widest text-muted">05 — How We Work</span>
-      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl sm:tracking-[-0.03em]">
         You don't need a bigger tool. You need someone who knows which one to build.
       </h2>
       <p class="fade-item mt-6 max-w-2xl text-lg text-muted">
@@ -210,7 +210,7 @@
       </div>
 
       <div class="fade-item mt-16">
-        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
           Book free consultation
         </a>
       </div>
@@ -218,12 +218,12 @@
   </section>
 
   <!-- ============ PRICING ============ -->
-  <section id="pricing" class="scroll-mt-16 fade-section relative overflow-hidden bg-ink py-24 sm:py-28">
+  <section id="pricing" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="draft-badge">Illustrative pricing — final numbers confirmed on your consultation</span>
 
       <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">06 — Pricing</span>
-      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl sm:tracking-[-0.03em]">
         What this costs depends on how much of your business we're touching.
       </h2>
       <p class="fade-item mt-6 max-w-2xl text-lg text-muted">
@@ -266,7 +266,7 @@
       </div>
 
       <div class="fade-item mt-16">
-        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+        <a href="#contact" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
           Book free consultation
         </a>
       </div>
@@ -274,12 +274,12 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="scroll-mt-16 fade-section relative overflow-hidden bg-charcoal py-24 sm:py-28">
+  <section id="contact" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="draft-badge">Placeholder contact details — swap in your real inbox before launch</span>
 
       <span class="mt-6 block font-mono text-xs uppercase tracking-widest text-muted">07 — Contact</span>
-      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+      <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl sm:tracking-[-0.03em]">
         Book free consultation
       </h2>
       <p class="fade-item mt-6 max-w-2xl text-lg text-muted">
@@ -305,7 +305,7 @@
             <textarea id="message" name="message" rows="5" class="mt-2 w-full rounded-lg border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20"></textarea>
           </div>
           <div class="sm:col-span-2">
-            <button type="submit" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink transition hover:bg-gold">
+            <button type="submit" class="inline-flex items-center rounded-full bg-paper px-7 py-3.5 font-mono text-sm uppercase tracking-wider text-ink press hover:bg-gold">
               Book free consultation
             </button>
             <p class="mt-3 text-xs text-muted">This form isn't wired to a backend yet. Connect it to your form handler of choice before launch.</p>
@@ -330,7 +330,7 @@
 
 </main>
 
-<footer class="border-t border-paper/10 bg-charcoal">
+<footer class="border-t border-paper/10 bg-carbon">
   <div class="mx-auto max-w-6xl px-6 py-12">
     <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
       <div class="max-w-sm">

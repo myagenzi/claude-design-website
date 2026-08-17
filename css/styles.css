@@ -3,6 +3,49 @@
   color: #FAFAFC;
 }
 
+/* ===== Intro video overlay =====
+   Full-screen intro that plays once on load, then fades out to reveal the
+   site (see js/main.js). Body scroll is locked while it's up so nothing
+   behind it can be scrolled into view early. */
+#intro-overlay {
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+#intro-overlay.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+body.intro-locked {
+  overflow: hidden;
+}
+
+/* ===== Custom cursor =====
+   A tiny replica of the Agenzi mark follows the pointer: the golden core
+   tracks the mouse almost immediately, while the spiral around it has
+   "weight" and eases in slower, chasing the core (see js/main.js). Native
+   cursor is hidden everywhere except real text fields, and only on
+   devices with an actual mouse — touchscreens keep their own behavior,
+   and reduced-motion keeps the plain OS cursor entirely. */
+html.custom-cursor-active {
+  cursor: none;
+}
+html.custom-cursor-active *,
+html.custom-cursor-active *::before,
+html.custom-cursor-active *::after {
+  cursor: none !important;
+}
+html.custom-cursor-active input,
+html.custom-cursor-active textarea {
+  cursor: text !important;
+}
+#cursor-core {
+  background: radial-gradient(circle, #fff6da 0%, #EDB145 45%, #a9711e 100%);
+  box-shadow: 0 0 8px 2px rgba(237, 177, 69, 0.7);
+}
+#cursor-spiral {
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
+}
+
 /* ===== Carbon black =====
    One continuous dark surface for the whole page, styled like an
    automotive carbon-black paint job: a neutral near-black base with a
@@ -248,8 +291,21 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   transform: translateY(0);
 }
 
+/* Corner glow on the fade-sections (How We Work, Pricing, Contact) —
+   matches the page-glow blobs on the stack-card pages, just revealed on
+   the section's own scroll-into-view instead of a scrubbed timeline. */
+.page-glow {
+  transition: opacity 0.9s ease;
+}
+.fade-section.is-glow-visible .page-glow {
+  opacity: 0.25;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade-item {
+    transition: none;
+  }
+  .page-glow {
     transition: none;
   }
 }

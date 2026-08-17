@@ -1,6 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ---- Intro video ----
+  // Plays once on load, then fades out into the site. Reduced-motion
+  // skips it outright (autoplaying video is exactly what that preference
+  // asks to avoid). A hard timeout and an error handler both fall back to
+  // revealing the site immediately — a failed or slow-loading video must
+  // never leave a visitor stuck looking at a black screen.
+  (() => {
+    const overlay = document.getElementById('intro-overlay');
+    const video = document.getElementById('intro-video');
+    const skipBtn = document.getElementById('intro-skip');
+    if (!overlay) return;
+
+    if (prefersReducedMotion || !video) {
+      overlay.remove();
+      return;
+    }
+
+    document.body.classList.add('intro-locked');
+    let dismissed = false;
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      document.body.classList.remove('intro-locked');
+      overlay.classList.add('is-hidden');
+      setTimeout(() => overlay.remove(), 750);
+    }
+
+    video.addEventListener('ended', dismiss);
+    video.addEventListener('error', dismiss);
+    if (skipBtn) skipBtn.addEventListener('click', dismiss);
+    setTimeout(dismiss, 8000);
+
+    // Autoplay can still be blocked by the browser despite muted+playsinline
+    // (rare, but happens) — if play() rejects, don't wait for an 'ended'
+    // event that will never come.
+    const playAttempt = video.play();
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(dismiss);
+    }
+  })();
+
   // ---- Mobile nav ----
   const toggle = document.getElementById('nav-toggle');
   const mobileNav = document.getElementById('mobile-nav');
@@ -368,6 +410,142 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(draw);
   })();
 
+  // ---- Ambient dot field: every page, bouncy, mouse-reactive ----
+  // A lighter, general-purpose version of the hero's particle system —
+  // no chaos-to-logo choreography, just a field of brand-colored dots that
+  // bounce elastically off the section edges (near-1 restitution, so they
+  // stay lively instead of settling down) and scatter away from the
+  // cursor on contact. One canvas per section (sections have opaque
+  // backgrounds, so a single page-spanning fixed canvas would be hidden
+  // behind whichever one is on top) — each pauses its own render loop
+  // when scrolled out of view.
+  if (!prefersReducedMotion) {
+    const DOT_COLORS = ['#2944A3', '#6B33B8', '#B337A5', '#EDB145'];
+    const DOT_COUNT = 34;
+    const MOUSE_RADIUS = 70;
+    const BOUNCE_RESTITUTION = 0.99;
+
+    document.querySelectorAll('.dot-field').forEach((canvas) => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      const host = canvas.closest('section') || canvas.parentElement;
+
+      let w = 0;
+      let h = 0;
+      let dots = [];
+      let running = false;
+      let rafId = null;
+      let mouseX = -9999;
+      let mouseY = -9999;
+
+      function build() {
+        dots = Array.from({ length: DOT_COUNT }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 1.1,
+          vy: (Math.random() - 0.5) * 1.1,
+          r: 1.3 + Math.random() * 1.7,
+          color: DOT_COLORS[Math.floor(Math.random() * DOT_COLORS.length)],
+        }));
+      }
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth;
+        h = canvas.clientHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        build();
+      }
+
+      function onMouseMove(e) {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      }
+
+      function draw() {
+        if (!running) return;
+        ctx.clearRect(0, 0, w, h);
+
+        dots.forEach((d) => {
+          d.x += d.vx;
+          d.y += d.vy;
+
+          if (d.x - d.r < 0) {
+            d.x = d.r;
+            d.vx = Math.abs(d.vx) * BOUNCE_RESTITUTION;
+          } else if (d.x + d.r > w) {
+            d.x = w - d.r;
+            d.vx = -Math.abs(d.vx) * BOUNCE_RESTITUTION;
+          }
+          if (d.y - d.r < 0) {
+            d.y = d.r;
+            d.vy = Math.abs(d.vy) * BOUNCE_RESTITUTION;
+          } else if (d.y + d.r > h) {
+            d.y = h - d.r;
+            d.vy = -Math.abs(d.vy) * BOUNCE_RESTITUTION;
+          }
+
+          // Contact with the cursor scatters the dot away — a hard, quick
+          // impulse (ping-pong paddle hit), not a gentle push.
+          const dx = d.x - mouseX;
+          const dy = d.y - mouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MOUSE_RADIUS && dist > 0.001) {
+            const force = ((MOUSE_RADIUS - dist) / MOUSE_RADIUS) * 2.4;
+            d.vx += (dx / dist) * force;
+            d.vy += (dy / dist) * force;
+          }
+
+          // Keep speed in a lively but bounded range so contact impulses
+          // don't accumulate into runaway velocity over time.
+          const speed = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+          const maxSpeed = 4.5;
+          if (speed > maxSpeed) {
+            d.vx = (d.vx / speed) * maxSpeed;
+            d.vy = (d.vy / speed) * maxSpeed;
+          }
+
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.globalAlpha = 0.55;
+          ctx.fillStyle = d.color;
+          ctx.shadowColor = d.color;
+          ctx.shadowBlur = 4;
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        rafId = requestAnimationFrame(draw);
+      }
+      function stop() {
+        running = false;
+        if (rafId) cancelAnimationFrame(rafId);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', onMouseMove);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(
+          (entries) => entries.forEach((entry) => (entry.isIntersecting ? start() : stop())),
+          { threshold: 0.01 }
+        ).observe(host);
+      } else {
+        start();
+      }
+    });
+  }
+
   // ---- Stacked cards: text-only crossfade ----
   // CSS position:sticky does the actual pinning and stacking (see
   // .stack-card__sticky in styles.css) — its background is always full-bleed
@@ -476,21 +654,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- Fade-up reveal for content sections ----
+  // These sections (How We Work, Pricing, Contact) each own a color too
+  // (see index.html --section-accent), continuing the same rotation the
+  // stack-card pages use. They're not scroll-scrubbed like those pages —
+  // just a one-time reveal of the section's own glow + a header tint,
+  // fired the same moment its content fades in.
   const fadePanels = document.querySelectorAll('.fade-panel');
   fadePanels.forEach((panel) => {
     panel.querySelectorAll('.fade-item').forEach((item, i) => {
       item.style.transitionDelay = `${i * 0.08}s`;
     });
   });
+  function revealFadeSection(panel) {
+    panel.classList.add('is-visible');
+    const section = panel.closest('.fade-section');
+    if (!section) return;
+    section.classList.add('is-glow-visible');
+    const accent = getComputedStyle(section).getPropertyValue('--section-accent').trim();
+    if (accent && headerAccent) {
+      if (prefersReducedMotion) gsap.set(headerAccent, { backgroundColor: accent });
+      else gsap.to(headerAccent, { backgroundColor: accent, duration: 0.6, ease: 'power1.out' });
+    }
+  }
   if (fadePanels.length) {
     if (prefersReducedMotion) {
-      fadePanels.forEach((panel) => panel.classList.add('is-visible'));
+      fadePanels.forEach((panel) => revealFadeSection(panel));
     } else if ('IntersectionObserver' in window) {
       const fadeObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
+              revealFadeSection(entry.target);
               fadeObserver.unobserve(entry.target);
             }
           });
@@ -499,7 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       fadePanels.forEach((panel) => fadeObserver.observe(panel));
     } else {
-      fadePanels.forEach((panel) => panel.classList.add('is-visible'));
+      fadePanels.forEach((panel) => revealFadeSection(panel));
     }
   }
 
@@ -566,5 +760,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     });
+  }
+
+  // ---- Custom cursor: tiny logo with a weighted, lagging spiral ----
+  // The golden core chases the real cursor almost immediately (fast lerp);
+  // the spiral around it has "weight" so it eases in slower, trailing the
+  // core rather than moving in lockstep with it. Only on devices with an
+  // actual mouse — touchscreens never see this, and reduced-motion keeps
+  // the plain OS cursor rather than an animated replacement.
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!prefersReducedMotion && hasFinePointer) {
+    const cursorEl = document.getElementById('custom-cursor');
+    const spiralEl = document.getElementById('cursor-spiral');
+    const coreEl = document.getElementById('cursor-core');
+    if (cursorEl && spiralEl && coreEl) {
+      document.documentElement.classList.add('custom-cursor-active');
+
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let coreX = mouseX;
+      let coreY = mouseY;
+      let spiralX = mouseX;
+      let spiralY = mouseY;
+      let started = false;
+
+      const CORE_EASE = 0.38;
+      const SPIRAL_EASE = 0.1;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!started) {
+          started = true;
+          coreX = spiralX = mouseX;
+          coreY = spiralY = mouseY;
+          cursorEl.classList.remove('hidden');
+        }
+      });
+      document.addEventListener('mouseleave', () => cursorEl.classList.add('hidden'));
+      document.addEventListener('mouseenter', () => {
+        if (started) cursorEl.classList.remove('hidden');
+      });
+
+      function tick() {
+        coreX += (mouseX - coreX) * CORE_EASE;
+        coreY += (mouseY - coreY) * CORE_EASE;
+        spiralX += (mouseX - spiralX) * SPIRAL_EASE;
+        spiralY += (mouseY - spiralY) * SPIRAL_EASE;
+
+        coreEl.style.transform = `translate3d(${coreX}px, ${coreY}px, 0) translate(-50%, -50%)`;
+        spiralEl.style.transform = `translate3d(${spiralX}px, ${spiralY}px, 0) translate(-50%, -50%)`;
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
   }
 });

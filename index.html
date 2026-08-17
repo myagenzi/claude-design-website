@@ -17,6 +17,13 @@
 </head>
 <body class="font-sans text-paper antialiased">
 
+<div id="intro-overlay" class="fixed inset-0 z-[10000] flex items-center justify-center bg-black">
+  <video id="intro-video" class="h-full w-full object-cover" src="assets/intro.mp4" autoplay muted playsinline></video>
+  <button id="intro-skip" type="button" class="press absolute bottom-6 right-6 rounded-full border border-paper/25 bg-carbon/60 px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper/80 backdrop-blur hover:border-paper/50 hover:text-paper sm:bottom-8 sm:right-8">
+    Skip
+  </button>
+</div>
+
 <header class="chrome-edge sticky top-0 z-50 bg-carbon/80 backdrop-blur">
   <div class="mx-auto max-w-6xl px-6">
     <div class="flex h-16 items-center justify-between">
@@ -105,6 +112,7 @@
       </div>
 
       <canvas id="hero-particles" class="absolute inset-0" aria-hidden="true"></canvas>
+      <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
 
       <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
 
@@ -130,6 +138,7 @@
   <!-- ============ GREETINGS / OUR TAKE ============ -->
   <section id="greetings" class="scroll-mt-16 stack-card">
     <div class="stack-card__sticky z-[11] bg-carbon" style="--section-accent:#6B33B8" data-parallax-scope>
+      <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="page-glow parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#6B33B8" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -147,6 +156,7 @@
   <!-- ============ THE PROBLEM ============ -->
   <section id="the-problem" class="scroll-mt-16 stack-card">
     <div class="stack-card__sticky z-[12] bg-carbon" style="--section-accent:#2944A3" data-parallax-scope>
+      <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="page-glow parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#2944A3" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -169,6 +179,7 @@
   <!-- ============ THE FIX ============ -->
   <section id="the-fix" class="scroll-mt-16 stack-card">
     <div class="stack-card__sticky z-[13] bg-carbon" style="--section-accent:#EDB145" data-parallax-scope>
+      <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="page-glow parallax-blob absolute -right-32 -bottom-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#EDB145" data-parallax-target data-parallax-depth="30"></div>
       </div>
@@ -189,7 +200,11 @@
 
   <!-- ============ END OF STACK — normal flow resumes below ============ -->
   <!-- ============ HOW WE WORK ============ -->
-  <section id="how-we-work" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
+  <section id="how-we-work" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28" style="--section-accent:#B337A5">
+    <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="page-glow absolute -right-32 -top-32 h-80 w-80 rounded-full opacity-0 blur-3xl" style="background:#B337A5"></div>
+    </div>
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="font-mono text-xs uppercase tracking-widest text-muted">05 — How We Work</span>
       <h2 class="fade-item mt-4 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl sm:tracking-[-0.03em]">
@@ -228,7 +243,11 @@
   </section>
 
   <!-- ============ PRICING ============ -->
-  <section id="pricing" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
+  <section id="pricing" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28" style="--section-accent:#6B33B8">
+    <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="page-glow absolute -left-32 -top-32 h-80 w-80 rounded-full opacity-0 blur-3xl" style="background:#6B33B8"></div>
+    </div>
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="draft-badge">Illustrative pricing — final numbers confirmed on your consultation</span>
 
@@ -293,7 +312,11 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28">
+  <section id="contact" class="scroll-mt-16 fade-section relative overflow-hidden bg-carbon py-24 sm:py-28" style="--section-accent:#2944A3">
+    <canvas class="dot-field pointer-events-none absolute inset-0" aria-hidden="true"></canvas>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="page-glow absolute -left-32 -bottom-32 h-80 w-80 rounded-full opacity-0 blur-3xl" style="background:#2944A3"></div>
+    </div>
     <div class="fade-panel mx-auto max-w-5xl px-6">
       <span class="draft-badge">Placeholder contact details — swap in your real inbox before launch</span>
 
@@ -387,6 +410,11 @@
     </div>
   </div>
 </footer>
+
+<div id="custom-cursor" class="pointer-events-none fixed left-0 top-0 z-[9999] hidden" aria-hidden="true">
+  <img id="cursor-spiral" src="assets/agenzi-mark.png" alt="" class="absolute h-7 w-7 -translate-x-1/2 -translate-y-1/2" />
+  <div id="cursor-core" class="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full"></div>
+</div>
 
 <script src="js/main.js"></script>
 </body>

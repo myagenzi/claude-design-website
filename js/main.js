@@ -236,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!canvas || !canvas.getContext) return;
     const ctx = canvas.getContext('2d');
 
-    const BRAND_COLORS = ['#26339E', '#7B4FC9', '#C13FA0'];
-    const GOLD = '#F3A83B';
+    const BRAND_COLORS = ['#2944A3', '#6B33B8', '#B337A5'];
+    const GOLD = '#EDB145';
     const ARMS = 4;
     const PER_ARM = 22;
     const CORE_COUNT = 8;

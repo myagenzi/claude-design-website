@@ -3,10 +3,10 @@ tailwind.config = {
     extend: {
       colors: {
         ink: '#16162E',
-        navy: '#26339E',
-        violet: '#7B4FC9',
-        magenta: '#C13FA0',
-        gold: '#F3A83B',
+        navy: '#2944A3',
+        violet: '#6B33B8',
+        magenta: '#B337A5',
+        gold: '#EDB145',
         mist: '#ECEAF3',
         paper: '#FAFAFC',
         muted: '#9A9AB4',

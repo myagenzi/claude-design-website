@@ -1,5 +1,5 @@
 ::selection {
-  background: #C13FA0;
+  background: #B337A5;
   color: #FAFAFC;
 }
 
@@ -12,7 +12,7 @@ body {
   background-color: #0B0B0D;
   background-image:
     radial-gradient(ellipse 140% 60% at 20% -10%, rgba(255, 255, 255, 0.05), transparent 55%),
-    radial-gradient(ellipse 120% 55% at 100% 110%, rgba(123, 79, 201, 0.07), transparent 60%);
+    radial-gradient(ellipse 120% 55% at 100% 110%, rgba(107, 51, 184, 0.07), transparent 60%);
   background-attachment: fixed, fixed;
   background-size: cover, cover;
 }
@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6,
 p, li, label, dt, dd, td, th, figcaption, blockquote,
 a:not(.press),
 span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-gradient-text) {
-  color: #7B4FC9 !important;
+  color: #6B33B8 !important;
 }
 
 /* ===== Response: press feedback =====
@@ -91,7 +91,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
 }
 
 .brand-gradient-text {
-  background: linear-gradient(135deg, #26339E 0%, #7B4FC9 50%, #C13FA0 100%);
+  background: linear-gradient(135deg, #2944A3 0%, #6B33B8 50%, #B337A5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -141,7 +141,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   to { transform: scaleX(1); }
 }
 .hero-judgment.is-final {
-  color: #F3A83B;
+  color: #EDB145;
 }
 .hero-judgment.is-final::after {
   display: none;
@@ -180,7 +180,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   height: 8px;
   width: 3px;
   border-radius: 999px;
-  background: #F3A83B;
+  background: #EDB145;
   animation: scroll-cue-bounce 1.8s ease-in-out infinite;
 }
 @keyframes scroll-cue-bounce {
@@ -267,7 +267,7 @@ main {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: #F3A83B;
+  background: #EDB145;
   transition: width 0.25s ease;
 }
 .nav-link:hover::after,

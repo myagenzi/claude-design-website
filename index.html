@@ -60,7 +60,11 @@
             <ul id="cart-items" class="mt-4 hidden space-y-3"></ul>
 
             <div id="cart-footer" class="mt-5 hidden border-t border-paper/10 pt-4">
-              <a href="#contact" id="cart-checkout" class="press flex items-center justify-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink hover:bg-gold">
+              <div id="cart-total-row" class="mb-4 hidden items-center justify-between">
+                <span class="font-mono text-xs uppercase tracking-widest text-paper/70">Total</span>
+                <span id="cart-total-amount" class="font-display text-lg font-bold text-paper"></span>
+              </div>
+              <a href="#contact" id="cart-checkout" class="press hidden items-center justify-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink hover:bg-gold">
                 Discuss this in a consultation
               </a>
             </div>

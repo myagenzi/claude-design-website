@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartEmpty = document.getElementById('cart-empty');
   const cartItemsEl = document.getElementById('cart-items');
   const cartFooter = document.getElementById('cart-footer');
+  const cartTotalRow = document.getElementById('cart-total-row');
+  const cartTotalAmount = document.getElementById('cart-total-amount');
   const cartCheckout = document.getElementById('cart-checkout');
   const messageField = document.getElementById('message');
   const CART_KEY = 'agenzi-cart';
@@ -80,6 +82,40 @@ document.addEventListener('DOMContentLoaded', () => {
         </li>`
         )
         .join('');
+
+      // Custom has no fixed number ("Custom quote") so it can't be summed —
+      // it's the one plan that needs a real consult before a price exists.
+      // Fixed-price plans (Starter/Growth) just total up; no consult needed
+      // to see that number, so the button stays hidden unless Custom is in
+      // the mix.
+      let numericTotal = 0;
+      let hasCustom = false;
+      cart.forEach((item) => {
+        if (item.plan === 'Custom') {
+          hasCustom = true;
+          return;
+        }
+        const digits = item.price.replace(/[^0-9.]/g, '');
+        if (digits) numericTotal += parseFloat(digits) * item.qty;
+      });
+
+      if (numericTotal > 0) {
+        const formatted = `$${numericTotal.toLocaleString('en-US')}/mo`;
+        cartTotalAmount.textContent = hasCustom ? `${formatted} + custom quote` : formatted;
+        cartTotalRow.classList.remove('hidden');
+        cartTotalRow.classList.add('flex');
+      } else {
+        cartTotalRow.classList.add('hidden');
+        cartTotalRow.classList.remove('flex');
+      }
+
+      if (hasCustom) {
+        cartCheckout.classList.remove('hidden');
+        cartCheckout.classList.add('flex');
+      } else {
+        cartCheckout.classList.add('hidden');
+        cartCheckout.classList.remove('flex');
+      }
     }
 
     function addToCart(plan, price) {

@@ -36,6 +36,37 @@
       </nav>
 
       <div class="flex items-center gap-3">
+        <div class="relative">
+          <button id="cart-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="cart-panel" class="press relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 text-paper/80 hover:text-paper">
+            <span class="sr-only">Open cart</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="19" cy="21" r="1"></circle>
+              <path d="M2.5 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21 8H6"></path>
+            </svg>
+            <span id="cart-count" class="hidden absolute -right-1.5 -top-1.5 h-5 w-5 items-center justify-center rounded-full bg-gold font-mono text-[10px] font-bold text-ink">0</span>
+          </button>
+
+          <div id="cart-panel" class="hidden absolute right-0 z-50 mt-3 w-80 rounded-2xl border border-paper/10 bg-charcoal p-5 shadow-2xl shadow-black/40">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase tracking-widest text-paper/70">Your cart</span>
+              <button id="cart-close" type="button" class="press text-paper/50 hover:text-paper" aria-label="Close cart">✕</button>
+            </div>
+
+            <div id="cart-empty" class="mt-6 text-sm text-muted">
+              Nothing in your cart yet. Add a plan from Pricing to start.
+            </div>
+
+            <ul id="cart-items" class="mt-4 hidden space-y-3"></ul>
+
+            <div id="cart-footer" class="mt-5 hidden border-t border-paper/10 pt-4">
+              <a href="#contact" id="cart-checkout" class="press flex items-center justify-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink hover:bg-gold">
+                Discuss this in a consultation
+              </a>
+            </div>
+          </div>
+        </div>
+
         <a href="#contact" class="hidden items-center rounded-full bg-paper px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink press hover:bg-gold sm:inline-flex">
           Book free consultation
         </a>
@@ -240,6 +271,9 @@
             <li>· Build + 30 days of tuning</li>
             <li>· Email support</li>
           </ul>
+          <button type="button" class="add-to-cart press mt-auto inline-flex items-center justify-center rounded-full border border-paper/20 px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper hover:border-gold hover:text-gold" data-plan="Starter" data-price="$1,500/mo">
+            Add to cart
+          </button>
         </div>
 
         <div class="lift flex flex-col rounded-2xl border-2 border-gold bg-paper/5 p-8 shadow-lg shadow-gold/10">
@@ -251,6 +285,9 @@
             <li>· Build + 90 days of tuning</li>
             <li>· Priority support</li>
           </ul>
+          <button type="button" class="add-to-cart press mt-auto inline-flex items-center justify-center rounded-full border border-gold bg-gold/10 px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-gold hover:bg-gold hover:text-ink" data-plan="Growth" data-price="$3,500/mo">
+            Add to cart
+          </button>
         </div>
 
         <div class="lift flex flex-col rounded-2xl border border-paper/10 bg-paper/5 p-8">
@@ -262,6 +299,9 @@
             <li>· Dedicated build team</li>
             <li>· Ongoing management</li>
           </ul>
+          <button type="button" class="add-to-cart press mt-auto inline-flex items-center justify-center rounded-full border border-paper/20 px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper hover:border-gold hover:text-gold" data-plan="Custom" data-price="Custom quote">
+            Add to cart
+          </button>
         </div>
       </div>
 

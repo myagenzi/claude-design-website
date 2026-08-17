@@ -17,6 +17,147 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---- Cart ----
+  const cartToggle = document.getElementById('cart-toggle');
+  const cartPanel = document.getElementById('cart-panel');
+  const cartClose = document.getElementById('cart-close');
+  const cartCount = document.getElementById('cart-count');
+  const cartEmpty = document.getElementById('cart-empty');
+  const cartItemsEl = document.getElementById('cart-items');
+  const cartFooter = document.getElementById('cart-footer');
+  const cartCheckout = document.getElementById('cart-checkout');
+  const messageField = document.getElementById('message');
+  const CART_KEY = 'agenzi-cart';
+
+  if (cartToggle && cartPanel) {
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    } catch {
+      cart = [];
+    }
+
+    function saveCart() {
+      try {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      } catch {
+        // localStorage unavailable (private browsing, etc.) — cart still works for this session
+      }
+    }
+
+    function renderCart() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      if (totalQty > 0) {
+        cartCount.textContent = String(totalQty);
+        cartCount.classList.remove('hidden');
+        cartCount.classList.add('inline-flex');
+      } else {
+        cartCount.classList.add('hidden');
+        cartCount.classList.remove('inline-flex');
+      }
+
+      if (cart.length === 0) {
+        cartEmpty.classList.remove('hidden');
+        cartItemsEl.classList.add('hidden');
+        cartFooter.classList.add('hidden');
+        cartItemsEl.innerHTML = '';
+        return;
+      }
+
+      cartEmpty.classList.add('hidden');
+      cartItemsEl.classList.remove('hidden');
+      cartFooter.classList.remove('hidden');
+
+      cartItemsEl.innerHTML = cart
+        .map(
+          (item) => `
+        <li class="flex items-start justify-between gap-3">
+          <div>
+            <p class="text-sm font-semibold text-paper">${item.plan}${item.qty > 1 ? ` × ${item.qty}` : ''}</p>
+            <p class="text-xs text-muted">${item.price}</p>
+          </div>
+          <button type="button" class="press text-xs text-paper/40 hover:text-magenta" data-remove-plan="${item.plan}" aria-label="Remove ${item.plan} from cart">Remove</button>
+        </li>`
+        )
+        .join('');
+    }
+
+    function addToCart(plan, price) {
+      const existing = cart.find((item) => item.plan === plan);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ plan, price, qty: 1 });
+      }
+      saveCart();
+      renderCart();
+      openCart();
+    }
+
+    function removeFromCart(plan) {
+      cart = cart.filter((item) => item.plan !== plan);
+      saveCart();
+      renderCart();
+    }
+
+    function openCart() {
+      cartPanel.classList.remove('hidden');
+      cartToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeCart() {
+      cartPanel.classList.add('hidden');
+      cartToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    cartToggle.addEventListener('click', () => {
+      if (cartPanel.classList.contains('hidden')) openCart();
+      else closeCart();
+    });
+
+    if (cartClose) cartClose.addEventListener('click', closeCart);
+
+    document.addEventListener('click', (e) => {
+      if (!cartPanel.classList.contains('hidden') && !cartPanel.contains(e.target) && !cartToggle.contains(e.target)) {
+        closeCart();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCart();
+    });
+
+    cartItemsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-remove-plan]');
+      if (btn) removeFromCart(btn.dataset.removePlan);
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addToCart(btn.dataset.plan, btn.dataset.price);
+        const original = btn.textContent;
+        btn.textContent = 'Added ✓';
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.disabled = false;
+        }, 1200);
+      });
+    });
+
+    if (cartCheckout && messageField) {
+      cartCheckout.addEventListener('click', () => {
+        if (cart.length) {
+          const summary = cart.map((item) => `- ${item.plan} (${item.price})${item.qty > 1 ? ` x${item.qty}` : ''}`).join('\n');
+          messageField.value = `Interested in:\n${summary}\n\n`;
+        }
+        closeCart();
+      });
+    }
+
+    renderCart();
+  }
+
   // ---- Footer year ----
   document.querySelectorAll('[data-year]').forEach((el) => {
     el.textContent = new Date().getFullYear();

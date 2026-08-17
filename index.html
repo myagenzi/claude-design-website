@@ -92,13 +92,18 @@
       <a href="#contact" class="press mt-2 inline-flex w-fit items-center rounded-full bg-paper px-5 py-2.5 text-ink hover:bg-gold">Book free consultation</a>
     </div>
   </div>
+  <div id="header-accent" class="pointer-events-none absolute inset-x-0 -bottom-px h-[3px] transition-none" aria-hidden="true"></div>
 </header>
 
 <main>
 
   <!-- ============ HOME / HERO ============ -->
   <section id="home" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[10] bg-carbon text-paper" data-parallax-scope>
+    <div class="stack-card__sticky z-[10] bg-carbon text-paper" style="--section-accent:#B337A5" data-parallax-scope>
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="page-glow absolute -right-32 -top-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#B337A5"></div>
+      </div>
+
       <canvas id="hero-particles" class="absolute inset-0" aria-hidden="true"></canvas>
 
       <div class="pointer-events-none absolute inset-0 hero-vignette" aria-hidden="true"></div>
@@ -124,9 +129,9 @@
 
   <!-- ============ GREETINGS / OUR TAKE ============ -->
   <section id="greetings" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[11] bg-carbon" data-parallax-scope>
+    <div class="stack-card__sticky z-[11] bg-carbon" style="--section-accent:#6B33B8" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-violet to-magenta opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="page-glow parallax-blob absolute -left-32 -top-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#6B33B8" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">
@@ -141,9 +146,9 @@
 
   <!-- ============ THE PROBLEM ============ -->
   <section id="the-problem" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[12] bg-carbon" data-parallax-scope>
+    <div class="stack-card__sticky z-[12] bg-carbon" style="--section-accent:#2944A3" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -right-32 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-navy to-violet opacity-25 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="page-glow parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#2944A3" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">
@@ -163,9 +168,9 @@
 
   <!-- ============ THE FIX ============ -->
   <section id="the-fix" class="scroll-mt-16 stack-card">
-    <div class="stack-card__sticky z-[13] bg-carbon" data-parallax-scope>
+    <div class="stack-card__sticky z-[13] bg-carbon" style="--section-accent:#EDB145" data-parallax-scope>
       <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="parallax-blob absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-gradient-to-tr from-gold via-magenta to-violet opacity-20 blur-3xl" data-parallax-target data-parallax-depth="30"></div>
+        <div class="page-glow parallax-blob absolute -right-32 -bottom-32 h-80 w-80 rounded-full opacity-25 blur-3xl" style="background:#EDB145" data-parallax-target data-parallax-depth="30"></div>
       </div>
 
       <div class="relative mx-auto max-w-3xl px-6 py-24">

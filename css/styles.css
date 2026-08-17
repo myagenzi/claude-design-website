@@ -23,8 +23,8 @@ html {
 }
 
 /* ===== Brand color text =====
-   Every piece of text reads in the Agenzi brand violet — the signature
-   tone from the "Agenzi" logotype's gradient — against the carbon-black
+   Text reads in the Agenzi brand violet by default — the signature tone
+   from the "Agenzi" logotype's gradient — against the carbon-black
    surface, instead of a tiered paper/muted palette. This is a solid color,
    not the logotype's gradient-clip: gradient-clipped text on wrapped,
    multi-line copy hits a real paint bug (the clip mask goes stale across
@@ -34,12 +34,18 @@ html {
    color cues (the hero's strike-through reveal, draft-badge warnings, and
    button labels that need solid contrast against their own pill) are
    excluded on purpose — flattening those would remove information, not
-   just style. */
+   just style.
+
+   The four narrative sections (Home, Our Take, The Problem, The Fix) each
+   override --section-accent on their .stack-card__sticky wrapper (see
+   index.html), which cascades down to every descendant matched here — so
+   each page's text reads in its own assigned color instead of the
+   default. Everything after Pricing has no override and stays violet. */
 h1, h2, h3, h4, h5, h6,
 p, li, label, dt, dd, td, th, figcaption, blockquote,
 a:not(.press),
 span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-gradient-text) {
-  color: #6B33B8 !important;
+  color: var(--section-accent, #6B33B8) !important;
 }
 
 /* ===== Response: press feedback =====

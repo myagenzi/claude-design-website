@@ -378,6 +378,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // size, opacity, and clarity) — a push-through-the-stack feel.
   const stackCards = Array.from(document.querySelectorAll('.stack-card'));
 
+  // ---- Per-page color identity: header accent + corner glow rotation ----
+  // Each of the 4 narrative pages owns one accent color (magenta, violet,
+  // navy, gold — same order as the sections). The header's accent bar and
+  // each page's own corner glow blob both key off this array, so the
+  // header and the ambient light "belong" to whichever page is on screen.
+  const PAGE_COLORS = ['#B337A5', '#6B33B8', '#2944A3', '#EDB145'];
+  const headerAccent = document.getElementById('header-accent');
+  const glowBlobs = stackCards.map((card) => card.querySelector('.page-glow'));
+
+  if (headerAccent) {
+    gsap.set(headerAccent, { backgroundColor: PAGE_COLORS[0] });
+  }
+
   if (stackCards.length && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -386,7 +399,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const sticky = card.querySelector('.stack-card__sticky');
         if (sticky) gsap.set(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)' });
       });
+      glowBlobs.forEach((blob) => {
+        if (blob) gsap.set(blob, { opacity: 1, scale: 1 });
+      });
     } else {
+      if (glowBlobs[0]) gsap.set(glowBlobs[0], { opacity: 1, scale: 1 });
+      glowBlobs.slice(1).forEach((blob) => {
+        if (blob) gsap.set(blob, { opacity: 0, scale: 0.6 });
+      });
+
       stackCards.forEach((card, i) => {
         if (i === 0) return;
         const sticky = card.querySelector('.stack-card__sticky');
@@ -420,6 +441,22 @@ document.addEventListener('DOMContentLoaded', () => {
           tl.to(prevSticky, { z: -700, scale: 0.85, opacity: 0, filter: 'blur(5px)', ease: 'power1.in', duration: 0.6 }, 0);
         }
         tl.to(sticky, { z: 0, scale: 1, opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 0.7 }, 0.3);
+
+        // Header tints to the incoming page's color, and its glow blob
+        // swaps corners with it — the outgoing blob fades on the same
+        // beat as the outgoing card, the incoming one settles into its
+        // corner on the same beat as the incoming card.
+        if (headerAccent) {
+          tl.to(headerAccent, { backgroundColor: PAGE_COLORS[i], ease: 'none' }, 0);
+        }
+        const prevBlob = glowBlobs[i - 1];
+        const currentBlob = glowBlobs[i];
+        if (prevBlob) {
+          tl.to(prevBlob, { opacity: 0, scale: 0.6, ease: 'power1.in', duration: 0.6 }, 0);
+        }
+        if (currentBlob) {
+          tl.to(currentBlob, { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.7 }, 0.3);
+        }
       });
     }
   }

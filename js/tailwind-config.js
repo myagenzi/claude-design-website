@@ -8,10 +8,10 @@ tailwind.config = {
         magenta: '#B337A5',
         gold: '#EDB145',
         mist: '#ECEAF3',
-        paper: '#FAFAFC',
+        paper: '#1D1D1F',
         muted: '#9A9AB4',
-        charcoal: '#17172C',
-        carbon: '#0B0B0D',
+        charcoal: '#F5F5F7',
+        carbon: '#FFFFFF',
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'sans-serif'],

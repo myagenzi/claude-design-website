@@ -46,18 +46,12 @@ html.custom-cursor-active textarea {
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
 }
 
-/* ===== Carbon black =====
-   One continuous dark surface for the whole page, styled like an
-   automotive carbon-black paint job: a neutral near-black base with a
-   single soft light sheen sweeping across it — fixed to the viewport so it
-   reads as one unbroken panel, not a stack of flat section colors. */
+/* ===== White surface =====
+   Clean white throughout, Apple-style — flat, no ambient page-wide
+   gradient. Color lives in the content (the per-page hue glows and the
+   dots), not in the background itself. */
 body {
-  background-color: #0B0B0D;
-  background-image:
-    radial-gradient(ellipse 140% 60% at 20% -10%, rgba(255, 255, 255, 0.05), transparent 55%),
-    radial-gradient(ellipse 120% 55% at 100% 110%, rgba(107, 51, 184, 0.07), transparent 60%);
-  background-attachment: fixed, fixed;
-  background-size: cover, cover;
+  background-color: #FFFFFF;
 }
 
 html {
@@ -65,30 +59,31 @@ html {
   font-optical-sizing: auto;
 }
 
-/* ===== Brand color text =====
-   Text reads in the Agenzi brand violet by default — the signature tone
-   from the "Agenzi" logotype's gradient — against the carbon-black
-   surface, instead of a tiered paper/muted palette. This is a solid color,
-   not the logotype's gradient-clip: gradient-clipped text on wrapped,
-   multi-line copy hits a real paint bug (the clip mask goes stale across
-   reflow/line-wrap, e.g. web-font swap, and shows as garbled overlapping
-   glyphs), so the gradient stays reserved for the short, single-line
-   "Agenzi" wordmark (.brand-gradient-text) where it's safe. Functional
-   color cues (the hero's strike-through reveal, draft-badge warnings, and
-   button labels that need solid contrast against their own pill) are
-   excluded on purpose — flattening those would remove information, not
-   just style.
+/* ===== Text: near-black with a whisper of the page's hue =====
+   Apple's signature near-black (#1D1D1F), not pure black — with a very
+   faint tint of whichever page's color-hue glow is active blended in via
+   color-mix(), as if the text were sitting on frosted glass a few feet
+   from that light rather than being lit by it directly. Subtle enough
+   that it reads as "warm/cool near-black," not as colored text — the full
+   saturated hue stays reserved for the glow blobs, dots, and header
+   accent bar. A soft, matching text-shadow adds the glass's faint glow
+   without needing an actual blur backdrop behind every paragraph.
 
    The four narrative sections (Home, Our Take, The Problem, The Fix) each
    override --section-accent on their .stack-card__sticky wrapper (see
    index.html), which cascades down to every descendant matched here — so
-   each page's text reads in its own assigned color instead of the
-   default. Everything after Pricing has no override and stays violet. */
+   each page's text picks up its own assigned tint instead of the
+   default. Everything after Pricing has no override and stays the
+   default violet-tinted near-black. Functional color cues (the hero's
+   strike-through reveal, draft-badge warnings, and button labels that
+   need solid contrast against their own pill) are excluded on purpose —
+   flattening those would remove information, not just style. */
 h1, h2, h3, h4, h5, h6,
 p, li, label, dt, dd, td, th, figcaption, blockquote,
 a:not(.press),
 span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-gradient-text) {
-  color: var(--section-accent, #6B33B8) !important;
+  color: color-mix(in srgb, var(--section-accent, #6B33B8) 7%, #1D1D1F 93%) !important;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--section-accent, #6B33B8) 16%, transparent);
 }
 
 /* ===== Response: press feedback =====
@@ -111,6 +106,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
    fade where content passes underneath reads as a material with depth. */
 .chrome-edge {
   position: relative;
+  backdrop-filter: saturate(1.8) blur(20px);
 }
 .chrome-edge::after {
   content: "";
@@ -119,20 +115,20 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   right: 0;
   bottom: -14px;
   height: 14px;
-  background: linear-gradient(to bottom, rgba(8, 8, 20, 0.28), transparent);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.06), transparent);
   pointer-events: none;
 }
 @media (prefers-reduced-transparency: reduce) {
   header {
-    background-color: #17172C !important;
+    background-color: #FFFFFF !important;
     backdrop-filter: none !important;
   }
 }
 @media (prefers-contrast: more) {
   header {
-    background-color: #0D0D1A !important;
+    background-color: #FFFFFF !important;
     backdrop-filter: none !important;
-    border-bottom: 1px solid rgba(250, 250, 252, 0.3);
+    border-bottom: 1px solid rgba(29, 29, 31, 0.3);
   }
   .chrome-edge::after {
     display: none;
@@ -170,7 +166,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
 .hero-judgment {
   display: inline-block;
   position: relative;
-  color: #C9807E;
+  color: #A8395A;
   transition: color 0.4s ease;
 }
 .hero-judgment::after {
@@ -180,7 +176,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   right: -3%;
   top: 52%;
   height: 2.5px;
-  background: #E5484D;
+  background: #D5323B;
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -191,14 +187,14 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   to { transform: scaleX(1); }
 }
 .hero-judgment.is-final {
-  color: #EDB145;
+  color: #A66C0A;
 }
 .hero-judgment.is-final::after {
   display: none;
 }
 
 .hero-vignette {
-  background: linear-gradient(180deg, rgba(8, 8, 20, 0.5) 0%, rgba(8, 8, 20, 0.3) 40%, rgba(8, 8, 20, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 40%, rgba(255, 255, 255, 0.55) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -222,7 +218,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   align-items: flex-start;
   justify-content: center;
   border-radius: 999px;
-  border: 2px solid rgba(250, 250, 252, 0.4);
+  border: 2px solid rgba(29, 29, 31, 0.25);
   padding-top: 8px;
 }
 .scroll-cue span {
@@ -317,7 +313,16 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   will-change: transform;
 }
 
-/* ===== Nav underline ===== */
+/* ===== Nav links: Apple blue ===== */
+/* Higher specificity than the blanket text-color rule (a:not(.press)),
+   and both carry !important, so this wins on specificity rather than
+   source order — the nav bar reads as Apple's blue CTA links regardless
+   of which page's tint that rule would otherwise apply. */
+header .nav-link,
+#mobile-nav a:not(.press) {
+  color: #0066CC !important;
+  text-shadow: none !important;
+}
 .nav-link {
   position: relative;
   padding-bottom: 2px;
@@ -329,7 +334,7 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: #EDB145;
+  background: #0066CC;
   transition: width 0.25s ease;
 }
 .nav-link:hover::after,
@@ -394,5 +399,5 @@ span:not(.hero-judgment):not(.draft-badge):not([aria-hidden="true"]):not(.brand-
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #F5C066;
+  color: #8A5A0F;
 }

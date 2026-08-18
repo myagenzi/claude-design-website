@@ -413,22 +413,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Ambient dot field: every page, bouncy, mouse-reactive ----
   // A lighter, general-purpose version of the hero's particle system —
   // no chaos-to-logo choreography, just a field of brand-colored dots that
-  // bounce elastically off the section edges (near-1 restitution, so they
-  // stay lively instead of settling down) and scatter away from the
-  // cursor on contact. One canvas per section (sections have opaque
-  // backgrounds, so a single page-spanning fixed canvas would be hidden
-  // behind whichever one is on top) — each pauses its own render loop
-  // when scrolled out of view.
+  // bounce off the section edges and scatter away from the cursor on
+  // contact, gradually calming from that burst back to a slow ambient
+  // drift rather than staying energetic forever. Dots spawn clustered
+  // around the same corner as that page's own color-hue glow, instead of
+  // scattered across the whole section, so they read as part of that hue
+  // rather than a separate, unrelated effect. One canvas per section
+  // (sections have opaque backgrounds, so a single page-spanning fixed
+  // canvas would be hidden behind whichever one is on top) — each pauses
+  // its own render loop when scrolled out of view.
   if (!prefersReducedMotion) {
     const DOT_COLORS = ['#2944A3', '#6B33B8', '#B337A5', '#EDB145'];
     const DOT_COUNT = 34;
     const MOUSE_RADIUS = 70;
-    const BOUNCE_RESTITUTION = 0.99;
+    const BOUNCE_RESTITUTION = 1;
+    const DAMPING = 0.993;
+    const IDLE_SPEED = 0.15;
 
     document.querySelectorAll('.dot-field').forEach((canvas) => {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
       const host = canvas.closest('section') || canvas.parentElement;
+      const glow = canvas.parentElement ? canvas.parentElement.querySelector('.page-glow') : null;
+      const corner = glow ? glow.dataset.corner : null;
 
       let w = 0;
       let h = 0;
@@ -438,15 +445,37 @@ document.addEventListener('DOMContentLoaded', () => {
       let mouseX = -9999;
       let mouseY = -9999;
 
+      function cornerAnchor() {
+        const mx = Math.min(w, h) * 0.22;
+        switch (corner) {
+          case 'top-left':
+            return { cx: mx, cy: mx };
+          case 'bottom-left':
+            return { cx: mx, cy: h - mx };
+          case 'bottom-right':
+            return { cx: w - mx, cy: h - mx };
+          case 'top-right':
+            return { cx: w - mx, cy: mx };
+          default:
+            return { cx: w / 2, cy: h / 2 };
+        }
+      }
+
       function build() {
-        dots = Array.from({ length: DOT_COUNT }, () => ({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 1.1,
-          vy: (Math.random() - 0.5) * 1.1,
-          r: 1.3 + Math.random() * 1.7,
-          color: DOT_COLORS[Math.floor(Math.random() * DOT_COLORS.length)],
-        }));
+        const { cx, cy } = cornerAnchor();
+        const spreadX = w * 0.4;
+        const spreadY = h * 0.4;
+        dots = Array.from({ length: DOT_COUNT }, () => {
+          const r = 1.3 + Math.random() * 1.7;
+          return {
+            x: Math.min(w - r, Math.max(r, cx + (Math.random() - 0.5) * spreadX)),
+            y: Math.min(h - r, Math.max(r, cy + (Math.random() - 0.5) * spreadY)),
+            vx: (Math.random() - 0.5) * 1.1,
+            vy: (Math.random() - 0.5) * 1.1,
+            r,
+            color: DOT_COLORS[Math.floor(Math.random() * DOT_COLORS.length)],
+          };
+        });
       }
 
       function resize() {
@@ -497,6 +526,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const force = ((MOUSE_RADIUS - dist) / MOUSE_RADIUS) * 2.4;
             d.vx += (dx / dist) * force;
             d.vy += (dy / dist) * force;
+          }
+
+          // Every frame the dot loses a little energy, so a mouse-contact
+          // burst calms back down into a slow ambient drift instead of
+          // staying keyed-up forever. Once it's calmed close to idle, a
+          // tiny random nudge keeps it gently alive rather than freezing.
+          d.vx *= DAMPING;
+          d.vy *= DAMPING;
+          const speedAfterDamping = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+          if (speedAfterDamping < IDLE_SPEED) {
+            d.vx += (Math.random() - 0.5) * 0.02;
+            d.vy += (Math.random() - 0.5) * 0.02;
           }
 
           // Keep speed in a lively but bounded range so contact impulses
